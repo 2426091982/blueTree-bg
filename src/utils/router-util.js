@@ -13,6 +13,6 @@
  * @param {any} routes[].component
  * @returns routes
  */
-function defineRoutes(routes) {
+export function defineRoutes(routes) {
     return routes;
 };

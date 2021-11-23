@@ -1,10 +1,11 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import { useCssModule } from "@vue/runtime-dom";
 </script>
 
 <template>
-
+  <router-view></router-view>
 </template>
 
 <style lang="less">
@@ -18,6 +19,6 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 
 .title {
-    color: #ddd;
+  color: #ddd;
 }
 </style>

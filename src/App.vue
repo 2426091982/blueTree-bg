@@ -2,12 +2,9 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import NavBar from "@/components/sidebar/sidebar"
-import { ref, readonly, toRefs } from "@vue/reactivity";
-import { provide } from "@vue/runtime-core";
+import BreadCrumb from "@/components/breadcrumb";
+import { ref } from "@vue/reactivity";
 let collapsed = ref(false);
-provide("collapsed", toRefs(readonly({
-    collapsed
-})).collapsed)
 </script>
 
 <template>
@@ -18,10 +15,7 @@ provide("collapsed", toRefs(readonly({
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0" />
       <a-layout-content style="margin: 0 16px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>User</a-breadcrumb-item>
-          <a-breadcrumb-item>Bill</a-breadcrumb-item>
-        </a-breadcrumb>
+        <BreadCrumb />
         <div
           :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
         >
@@ -29,7 +23,7 @@ provide("collapsed", toRefs(readonly({
         </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
-        Ant Design ©2018 Created by Ant UED
+          
       </a-layout-footer>
     </a-layout>
   </a-layout>

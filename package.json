@@ -7,10 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "ant-design-vue": "^2.2.8",
     "vue": "^3.2.16"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.3",
+    "less": "^4.1.2",
+    "unplugin-vue-components": "^0.17.2",
     "vite": "^2.6.4"
   }
 }

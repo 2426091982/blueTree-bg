@@ -1,22 +1,20 @@
-<script setup>
-import { ref } from 'vue'
-
-defineProps({
-  msg: String
-})
-
-const count = ref(0)
+<template>
+  123123
+</template>
+<script>
+export default {
+  data() {
+    return {
+      collapsed: false,
+    };
+  },
+};
 </script>
 
-<template>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
-</template>
-
-<style scoped>
-a {
-  color: #42b983;
+<style>
+#components-layout-demo-side .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
 }
 </style>

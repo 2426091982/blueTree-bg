@@ -1,5 +1,5 @@
 <script setup>
-import { effect, ref, toRefs, watchEffect, watch } from "vue";
+import { effect, ref, toRefs, watchEffect, watch, inject } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const openKeys = ref([]);
@@ -24,7 +24,7 @@ effect(() => {
 </script>
 
 <template>
-    <!-- <div class="logo">后台</div> -->
+    <div class="logo">aaaa</div>
     <a-menu theme="dark" mode="inline" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys">
         <template v-for="item in $router.options.routes">
             <template v-if="item.children">

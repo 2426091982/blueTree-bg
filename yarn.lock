@@ -160,7 +160,11 @@
     "@vue/compiler-dom" "3.2.22"
     "@vue/shared" "3.2.22"
 
+<<<<<<< HEAD
+"@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.0.0-beta.18":
+=======
 "@vue/devtools-api@^6.0.0-beta.18":
+>>>>>>> 1ea877ea7c1063ce781172f199f5066cc8191fcc
   version "6.0.0-beta.20.1"
   resolved "https://registry.npmmirror.com/@vue/devtools-api/download/@vue/devtools-api-6.0.0-beta.20.1.tgz#5b499647e929c35baf2a66a399578f9aa4601142"
   integrity sha512-R2rfiRY+kZugzWh9ZyITaovx+jpU4vgivAEAiz80kvh3yviiTU3CBuGuyWpSwGz9/C7TkSWVM/FtQRGlZ16n8Q==
@@ -973,6 +977,13 @@ vue@^3.2.16:
     "@vue/runtime-dom" "3.2.22"
     "@vue/server-renderer" "3.2.22"
     "@vue/shared" "3.2.22"
+
+vuex@4:
+  version "4.0.2"
+  resolved "https://registry.nlark.com/vuex/download/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
+  integrity sha1-+Jbb1b8qDpY/AMZ+m2EN50nMrMk=
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"
 
 warning@^4.0.0:
   version "4.0.3"

@@ -1,0 +1,19 @@
+<template>
+    <a-menu-item 
+        v-for="childRoute in item.children" 
+        :key="`${item.path}/${childRoute.path}`"
+    >
+        <component
+            :is="childRoute.meta.icon" 
+            v-if="childRoute.meta && childRoute.meta.icon"
+        />
+        <span class="menu-title">
+            {{childRoute.meta.title}}
+        </span>
+    </a-menu-item>
+</template>
+<script setup>
+defineProps({
+    config: Object
+});
+</script>

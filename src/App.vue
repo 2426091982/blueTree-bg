@@ -17,7 +17,7 @@ let collapsed = false;
           <span>Option 1</span>
         </a-menu-item>
         <a-menu-item key="2">
-          <i class="iconfont icon-zhuye"></i>
+          <StepBackwardOutlined />
           <span>Option 2</span>
         </a-menu-item>
         <a-sub-menu key="sub1">
@@ -38,9 +38,9 @@ let collapsed = false;
               <span>User</span>
             </span>
           </template>
-          <a-menu-item key="3"> Tom </a-menu-item>
-          <a-menu-item key="4"> Bill </a-menu-item>
-          <a-menu-item key="5"> Alex </a-menu-item>
+          <a-menu-item key="6"> Tom </a-menu-item>
+          <a-menu-item key="7"> Bill </a-menu-item>
+          <a-menu-item key="8"> Alex </a-menu-item>
         </a-sub-menu>
         <a-menu-item key="9">
           <i class="iconfont icon-zhuye"></i>

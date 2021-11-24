@@ -8,7 +8,9 @@
  * @param {string} routes[].name
  * @param {string} routes[].beforeEnter
  * @param {string} routes[].props
- * @param {string} routes[].meta
+ * @param {object} routes[].meta
+ * @param {string} routes[].meta.title 导航栏标题
+ * @param {string} routes[].meta.icon 导航栏图标
  * @param {any} routes[].components
  * @param {any} routes[].component
  * @returns routes

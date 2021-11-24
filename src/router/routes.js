@@ -1,5 +1,5 @@
 import { defineRoutes } from '@/utils/router-util';
-import { SettingOutlined, HomeOutlined } from "@ant-design/icons-vue";
+import { SettingOutlined, HomeOutlined, PictureOutlined } from "@ant-design/icons-vue";
 
 import fragment from '@/components/fragment'; // <router-view />
 
@@ -70,6 +70,31 @@ const routes = defineRoutes([
             },
         ]
     },
+    {
+        path: "/picture",
+        component: fragment,
+        redirect: "/picture/list",
+        meta: {
+            icon: PictureOutlined,
+            title: "图片管理",
+        },
+        children: [
+            {
+                path: "list",
+                component: () => import("@/pages/picture/picture-list"),
+                meta: {
+                    title: "图片列表",
+                }
+            },
+            {
+                path: "recycle",
+                component: () => import("@/pages/picture/picture-recycle"),
+                meta: {
+                    title: "图片回收站",
+                }
+            },
+        ]
+    }
 ]);
 
 // 1. 

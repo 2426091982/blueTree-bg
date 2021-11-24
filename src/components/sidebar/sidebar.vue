@@ -1,31 +1,37 @@
 <script setup>
-import { effect, ref, toRefs, watchEffect, watch, inject } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const openKeys = ref([]);
 const selectedKeys = ref([]);
 
-effect(() => {
-    if (route.matched.length === 1) {
-        if ( !selectedKeys.value.includes(route.matched[0].path) ) {
-            selectedKeys.value = [route.matched[0].path];
+watch(
+    route,
+    () => {
+        if (route.matched.length === 1) {
+            if ( !selectedKeys.value.includes(route.matched[0].path) ) {
+                selectedKeys.value = [route.matched[0].path];
+            }
         }
+        if (route.matched.length === 2) {
+            if ( !openKeys.value.includes(route.matched[0].path) ) {
+                openKeys.value = [route.matched[0].path];
+            };
+            if ( !selectedKeys.value.includes(route.matched[1].path) ) {
+                selectedKeys.value = [route.matched[1].path];
+            };
+        }
+    },
+    {
+        immediate: true,
+        deep: true,
     }
-    if (route.matched.length === 2) {
-        if ( !openKeys.value.includes(route.matched[0].path) ) {
-            openKeys.value = [route.matched[0].path];
-        };
-        if ( !selectedKeys.value.includes(route.matched[1].path) ) {
-            selectedKeys.value = [route.matched[1].path];
-        };
-    }
-})
-
+)
 </script>
 
 <template>
     <div class="logo">aaaa</div>
-    <a-menu theme="dark" mode="inline" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys">
+    <a-menu theme="dark" mode="inline" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" class="navs">
         <template v-for="item in $router.options.routes">
             <template v-if="item.children">
                 <a-sub-menu :key="item.path">
@@ -77,5 +83,9 @@ effect(() => {
 .menu-title {
     margin-left: 10px;
     transition: color .3s;
+}
+
+.navs {
+    user-select: none;
 }
 </style>

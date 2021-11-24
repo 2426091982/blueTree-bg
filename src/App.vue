@@ -8,22 +8,22 @@ let collapsed = ref(false);
 </script>
 
 <template>
-  <a-layout id="components-layout-demo-side" style="min-height: 100vh">
+  <a-layout id="components-layout-demo-side" style="height: 100%;">
     <a-layout-sider v-model="collapsed" collapsible>
         <NavBar />
     </a-layout-sider>
-    <a-layout>
+    <a-layout class="container">
       <a-layout-header style="background: #fff; padding: 0" />
-      <a-layout-content style="margin: 0 16px">
+      <a-layout-content style="margin: 0 16px; display: flex; flex-direction: column; flex: 1;overflow: hidden;">
         <BreadCrumb />
         <div
-          :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
+          :style="{ padding: '24px', background: '#fff', minHeight: '360px', flex: '1', overflowY: 'scroll' }"
         >
           <router-view></router-view>
         </div>
       </a-layout-content>
-      <a-layout-footer style="text-align: center">
-          
+      <a-layout-footer style="text-align: center; padding: 6px 0;">
+          footer
       </a-layout-footer>
     </a-layout>
   </a-layout>
@@ -39,5 +39,21 @@ let collapsed = ref(false);
   font-size: 18px;
   text-align: center;
   color: #fff;
+}
+
+#app {
+    // overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+::-webkit-scrollbar {
+    background-color: #fff;
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 6px;
 }
 </style>

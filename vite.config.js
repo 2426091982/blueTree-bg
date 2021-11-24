@@ -8,9 +8,17 @@ export default defineConfig({
     plugins: [
         vue(),
         Component({
-        resolvers: [AntDesignVueResolver()],
-        extensions: ["vue"],
+            resolvers: [AntDesignVueResolver()],
+            extensions: ["vue"],
         }),
+        {
+            transform(code, id) {
+                if (id.endsWith(".vue")) {
+                    code = code.replace(/\/public/g, "");
+                }
+                return code;
+            }
+        }
     ],
     resolve: {
         alias: {

@@ -1,32 +1,56 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import NavBar from "@/components/sidebar/sidebar"
+import NavBar from "@/components/sidebar/sidebar";
 import BreadCrumb from "@/components/breadcrumb";
+import headerVue from "@/components/header/header.vue";
+
 import { ref } from "@vue/reactivity";
+
 let collapsed = ref(false);
+
 </script>
 
 <template>
-  <a-layout id="components-layout-demo-side" style="height: 100%;">
+  <a-layout
+    id="components-layout-demo-side"
+    style="height: 100%"
+    v-if="$store.state.token"
+  >
     <a-layout-sider v-model="collapsed" collapsible>
-        <NavBar />
+      <NavBar />
     </a-layout-sider>
     <a-layout class="container">
-      <a-layout-header style="background: #fff; padding: 0" />
-      <a-layout-content style="margin: 0 16px; display: flex; flex-direction: column; flex: 1;overflow: hidden;">
+      <headerVue></headerVue>
+      <a-layout-content
+        style="
+          margin: 0 16px;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          overflow: hidden;
+        "
+      >
         <BreadCrumb />
         <div
-          :style="{ padding: '24px', background: '#fff', minHeight: '360px', flex: '1', overflowY: 'scroll' }"
+          :style="{
+            padding: '24px',
+            background: '#fff',
+            minHeight: '360px',
+            flex: '1',
+            overflowY: 'scroll',
+          }"
         >
           <router-view></router-view>
         </div>
       </a-layout-content>
-      <a-layout-footer style="text-align: center; padding: 6px 0;">
-          footer
+      <a-layout-footer style="text-align: center; padding: 6px 0">
+        footer
       </a-layout-footer>
     </a-layout>
   </a-layout>
+
+  <router-view></router-view>
 </template>
 
 <style lang="less">
@@ -42,18 +66,18 @@ let collapsed = ref(false);
 }
 
 #app {
-    // overflow: hidden;
-    width: 100%;
-    height: 100%;
+  // overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {
-    background-color: #fff;
-    width: 6px;
+  background-color: #fff;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #ddd;
-    border-radius: 6px;
+  background-color: #ddd;
+  border-radius: 6px;
 }
 </style>

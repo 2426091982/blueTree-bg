@@ -5,6 +5,14 @@ import fragment from '@/components/fragment'; // <router-view />
 
 const routes = defineRoutes([
     {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/pages/login'),
+        meta: {
+            noRender: true
+        }
+    },
+    {
         path: '/',
         name: 'home',
         component: () => import('@/components/home'),
@@ -72,5 +80,4 @@ const routes = defineRoutes([
     },
 ]);
 
-// 1. 
 export default routes;

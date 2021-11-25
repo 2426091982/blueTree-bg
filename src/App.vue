@@ -15,18 +15,18 @@ let collapsed = ref(false);
                 <NavBar />
             </a-layout-sider>
             <a-layout class="container">
-            <a-layout-header style="background: #fff; padding: 0" />
-            <a-layout-content style="margin: 0 16px; display: flex; flex-direction: column; flex: 1;overflow: hidden;">
-                <BreadCrumb />
-                <div
-                :style="{ padding: '24px', background: '#fff', minHeight: '360px', flex: '1', overflowY: 'scroll' }"
-                >
-                <router-view></router-view>
-                </div>
-            </a-layout-content>
-            <a-layout-footer style="text-align: center; padding: 6px 0;">
-                footer
-            </a-layout-footer>
+                <a-layout-header style="background: #fff; padding: 0" />
+                <a-layout-content style="margin: 0 16px; display: flex; flex-direction: column; flex: 1;overflow: hidden;">
+                    <BreadCrumb />
+                    <div
+                        :style="{ padding: '24px', background: '#fff', minHeight: '360px', flex: '1', overflowY: 'scroll' }"
+                    >
+                        <router-view></router-view>
+                    </div>
+                </a-layout-content>
+                <a-layout-footer style="text-align: center; padding: 6px 0;">
+                    footer
+                </a-layout-footer>
             </a-layout>
         </a-layout>
     </a-config-provider>

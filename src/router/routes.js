@@ -72,7 +72,7 @@ const routes = defineRoutes([
     },
     {
         path: "/picture",
-        component: fragment,
+        component: () => import("@/pages/picture/picture"),
         redirect: "/picture/list",
         meta: {
             icon: PictureOutlined,

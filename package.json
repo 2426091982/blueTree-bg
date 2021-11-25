@@ -12,7 +12,8 @@
     "axios": "^0.24.0",
     "loadsh": "^0.0.4",
     "vue": "^3.2.16",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vuex": "4"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^3.0.0",

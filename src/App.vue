@@ -4,12 +4,12 @@
 import NavBar from "@/components/sidebar/sidebar";
 import BreadCrumb from "@/components/breadcrumb";
 import headerVue from "@/components/header/header.vue";
-import zhCn from "ant-design-vue/lib/locale/zh_CN"
+import zhCn from "ant-design-vue/lib/locale/zh_CN";
+import switchRoute from "./components/switchRoute.vue";
 
 import { ref } from "@vue/reactivity";
 
 let collapsed = ref(false);
-
 </script>
 
 <template>
@@ -43,7 +43,7 @@ let collapsed = ref(false);
               overflowY: 'scroll',
             }"
           >
-            <router-view></router-view>
+            <switchRoute></switchRoute>
           </div>
         </a-layout-content>
         <a-layout-footer style="text-align: center; padding: 6px 0">
@@ -53,7 +53,7 @@ let collapsed = ref(false);
     </a-layout>
     <router-view v-else></router-view>
   </a-config-provider>
-</template>
+</template> 
 
 <style lang="less">
 #components-layout-demo-side .logo {

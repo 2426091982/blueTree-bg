@@ -58,52 +58,54 @@ const selectImg = (data) => {
 </script>
 
 <template>
-    <a-space direction="vertical" :size="size">
-        <a-space style="width: 100%" :size="size">
-            <a-button type="primary" @click="visible = true">上传图片</a-button>
-            <a-button danger @click="isSelect = !isSelect" type="primary">
-                {{ isSelect ? "取消批量删除" : "批量删除"}}
-            </a-button>
-            <a-button v-show="isSelect" type="primary" danger>
-                删除至回收站
-            </a-button>
+    <div>
+        <a-space direction="vertical" :size="size">
+            <a-space style="width: 100%" :size="size">
+                <a-button type="primary" @click="visible = true">上传图片</a-button>
+                <a-button danger @click="isSelect = !isSelect" type="primary">
+                    {{ isSelect ? "取消批量删除" : "批量删除"}}
+                </a-button>
+                <a-button v-show="isSelect" type="primary" danger>
+                    删除至回收站
+                </a-button>
+            </a-space>
+            <a-space style="width: 100%" :size="size">
+                <a-input placeholder="文件名称模糊搜索" style="width: 300px"></a-input>
+                <a-range-picker></a-range-picker>
+            </a-space>
         </a-space>
-        <a-space style="width: 100%" :size="size">
-            <a-input placeholder="文件名称模糊搜索" style="width: 300px"></a-input>
-            <a-range-picker></a-range-picker>
-        </a-space>
-    </a-space>
-    
-    <Select class="img-list picture" :data="imgs" style="margin-top: 20px;" :isSelect="isSelect" @select="selectImg">
-        <template #default="{ data }">
-            <a-image :src="data" />
-        </template>
-        <template #select-operation="{ data }">
-            <CheckCircleFilled
-                style="font-size: 30px;"
-                :class="{ active: selectedDatas.includes(data) }"
-            />
-        </template>
-        <template #operation>
-            <DeleteFilled title="删除至回收站" style="font-size: 30px;"/>
-        </template>
-    </Select>
-    
-    <a-modal :visible="visible" @cancel="closeModal" @ok="closeModal">
-        <template #title> 新增图片 </template>
-        <div
-            class="upload-box"
-            @click="selectingFile"
-            @dragover="preventDefault"
-            @drop="selectedFile"
-        >
-            <img :src="imgUrl" alt="" v-if="imgUrl" style="width: 100%" />
-            <template v-else>
-                <UploadOutlined style="font-size: 24px; margin-bottom: 10px" />
-                点击或拖拽图片至此, 可以上传图片
+        
+        <Select class="img-list picture" :data="imgs" style="margin-top: 20px;" :isSelect="isSelect" @select="selectImg">
+            <template #default="{ data }">
+                <a-image :src="data" />
             </template>
-        </div>
-    </a-modal>
+            <template #select-operation="{ data }">
+                <CheckCircleFilled
+                    style="font-size: 30px;"
+                    :class="{ active: selectedDatas.includes(data) }"
+                />
+            </template>
+            <template #operation>
+                <DeleteFilled title="删除至回收站" style="font-size: 30px;"/>
+            </template>
+        </Select>
+        
+        <a-modal :visible="visible" @cancel="closeModal" @ok="closeModal">
+            <template #title> 新增图片 </template>
+            <div
+                class="upload-box"
+                @click="selectingFile"
+                @dragover="preventDefault"
+                @drop="selectedFile"
+            >
+                <img :src="imgUrl" alt="" v-if="imgUrl" style="width: 100%" />
+                <template v-else>
+                    <UploadOutlined style="font-size: 24px; margin-bottom: 10px" />
+                    点击或拖拽图片至此, 可以上传图片
+                </template>
+            </div>
+        </a-modal>
+    </div>
 </template>
 
 <style lang="less" scoped>

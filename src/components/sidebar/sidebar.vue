@@ -61,7 +61,6 @@ watch(
                     </a-menu-item>
                 </a-sub-menu>
             </template>
-
             <template v-else-if="!item.meta.noRender">
                 <a-menu-item
                     :key="`${item.path}`"

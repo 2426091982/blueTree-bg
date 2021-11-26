@@ -1,10 +1,7 @@
 <script setup>
-import { 
-  DoubleRightOutlined, 
-  CheckOutlined 
-} from "@ant-design/icons-vue";
+import { DoubleRightOutlined, CheckOutlined } from "@ant-design/icons-vue";
 import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+import { onMounted, watch } from "@vue/runtime-core";
 
 const state = defineProps({
   success: Boolean,
@@ -16,7 +13,7 @@ const blockStyle = ref({
 });
 const trilingStyle = ref({
   width: 0,
-  transition: 'none'
+  transition: "none",
 });
 let track = ref(null);
 let block = ref(null);
@@ -45,27 +42,42 @@ const mouseMove = (e) => {
   blockStyle.value.transform = `translateX(${currentX}px)`;
 };
 const mouseUp = (e) => {
-  if (currentX < targetW) { // 没有拖满进度条，让进度条回到原位
-    trilingStyle.value.transition = blockStyle.value.transition = "all 0.2s linear";
-    blockStyle.value.transform = `translateX(0)`;
-    trilingStyle.value.width = "0px";
-    setTimeout(() => {
-      trilingStyle.value.transition = blockStyle.value.transition = "none"
-    }, 200);
+  if (currentX < targetW) {
+    // 没拖到最右，就放手。重置样式
+    resetStyle();
   } else {
     emit("verlidatorSuccess");
   }
+  startX = currentX = 0;
   doc.removeEventListener("mousemove", mouseMove);
   doc.removeEventListener("mouseup", mouseUp);
 };
+const resetStyle = () => {
+  trilingStyle.value.transition = blockStyle.value.transition =
+    "all 0.2s linear";
+  blockStyle.value.transform = `translateX(0)`;
+  trilingStyle.value.width = "0px";
+  setTimeout(() => {
+    trilingStyle.value.transition = blockStyle.value.transition = "none";
+  }, 200);
+};
+
+watch(
+  state,
+  () => {
+    // 登录失败，重新进行校验
+    !state.success ? resetStyle() : null;
+  },
+  { deep: true, immediate: false }
+);
 </script>
 
 <template>
   <div :class="{ 'validator-track': true, success }" ref="track">
     <span class="position-absoult validator-tips">
       <transition name="text" mode="out-in">
-        <span v-if="!success"> 向右滑动，进行验证 </span>
-        <span v-else > 验证成功 </span>
+        <span v-if="!success"> 滑至最右，进行验证 </span>
+        <span v-else> 验证成功 </span>
       </transition>
     </span>
     <div
@@ -92,7 +104,7 @@ const mouseUp = (e) => {
 .icon-leave-active,
 .text-leave-active {
   display: block;
-  transition: all 0.4s linear;
+  transition: all 0.5s linear;
 }
 
 .icon-enter-from,
@@ -100,22 +112,6 @@ const mouseUp = (e) => {
 .icon-leave-to,
 .text-leave-to {
   opacity: 0;
-}
-
-.text-enter-from {
-  transform: translateY(20px);
-}
-
-.text-leave-to {
-  transform: translateY(-20px);
-}
-
-.icon-enter-from {
-  transform: translate(100%);
-}
-
-.icon-leave-to {
-  transform: translate(-100%);
 }
 
 .validator-track {
@@ -128,7 +124,6 @@ const mouseUp = (e) => {
   color: #fff;
   border-radius: 20px;
   background-color: #ffffff60;
-  user-select: none;
   overflow: hidden;
 }
 

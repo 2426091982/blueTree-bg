@@ -13,6 +13,8 @@ const store = useStore();
 const formRef = ref();
 const router = useRouter();
 let success = ref(false);
+let loading = ref(false);
+
 const labelCol = {
   span: 6,
 };
@@ -26,10 +28,11 @@ const formState = reactive({
 });
 const onSubmit = () => {
   if (!success.value) {
-    message.warn('请先完成人机校验！');
+    message.warn("请先完成人机校验！");
     return;
   }
   formRef.value.validate().then(() => {
+    loading.value = true;
     let { name: username, password, delivery } = formState;
     login(username, password)
       .then((res) => {
@@ -45,11 +48,12 @@ const onSubmit = () => {
         }
       })
       .catch(() => {
+        success.value = loading.value = false;
         message.error("用户名或密码错误！");
       });
   });
 };
-const verlidatorSuccess = () => success.value = true;
+const verlidatorSuccess = () => (success.value = true);
 </script>
 
 <template>
@@ -91,7 +95,8 @@ const verlidatorSuccess = () => success.value = true;
         <a-switch v-model:checked="formState.delivery" />
       </a-form-item>
       <a-form-item :wrapper-col="{ span: 20, offset: 0 }">
-        <a-button class="login-but" type="primary" @click="onSubmit">登录</a-button>
+        <a-button class="login-but" type="primary" @click="onSubmit" :loading="loading">登录</a-button
+        >
       </a-form-item>
     </a-form>
   </div>
@@ -110,6 +115,7 @@ const verlidatorSuccess = () => success.value = true;
 
   form {
     width: 400px;
+    user-select: none;
 
     .ant-form-item {
       justify-content: center;

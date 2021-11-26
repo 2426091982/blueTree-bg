@@ -14,48 +14,58 @@ let collapsed = ref(false);
 
 <template>
   <a-config-provider :locale="zhCn">
-    <a-layout
-      id="components-layout-demo-side"
-      style="height: 100%"
-      v-if="$store.state.token"
-    >
-      <a-layout-sider v-model="collapsed" collapsible>
-        <NavBar />
-      </a-layout-sider>
-      <a-layout class="container">
-        <headerVue></headerVue>
-        <a-layout-content
-          style="
-            margin: 0 16px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            overflow: hidden;
-          "
-        >
-          <BreadCrumb />
-          <div
-            :style="{
-              padding: '24px',
-              background: '#fff',
-              minHeight: '360px',
-              flex: '1',
-              overflowY: 'scroll',
-            }"
+    <transition name="gradually" mode="out-in">
+      <a-layout id="components-layout-demo-side" style="height: 100%" v-if="$store.state.token">
+        <a-layout-sider v-model="collapsed" collapsible>
+          <NavBar />
+        </a-layout-sider>
+        <a-layout class="container">
+          <headerVue></headerVue>
+          <a-layout-content
+            style="
+              margin: 0 16px;
+              display: flex;
+              flex-direction: column;
+              flex: 1;
+              overflow: hidden;
+            "
           >
-            <switchRoute></switchRoute>
-          </div>
-        </a-layout-content>
-        <a-layout-footer style="text-align: center; padding: 6px 0">
-          footer
-        </a-layout-footer>
+            <BreadCrumb />
+            <div
+              :style="{
+                padding: '24px',
+                background: '#fff',
+                minHeight: '360px',
+                flex: '1',
+                overflowY: 'scroll',
+              }"
+            >
+              <switchRoute></switchRoute>
+            </div>
+          </a-layout-content>
+          <a-layout-footer style="text-align: center; padding: 6px 0">
+            footer
+          </a-layout-footer>
+        </a-layout>
       </a-layout>
-    </a-layout>
-    <router-view v-else></router-view>
+      <div class="switchRoute" v-else>
+        <router-view />
+      </div>
+    </transition>
   </a-config-provider>
 </template> 
 
 <style lang="less">
+.gradually-enter-active,
+.gradually-laver-active {
+  transition: all 0.5s linear;
+}
+
+.gradually-enter-from,
+.gradually-laver-to {
+  opacity: 0;
+}
+
 #components-layout-demo-side .logo {
   height: 32px;
   background: rgba(255, 255, 255, 0.2);

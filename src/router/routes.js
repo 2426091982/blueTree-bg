@@ -15,7 +15,7 @@ const routes = defineRoutes([
     {
         path: '/',
         name: 'home',
-        component: () => import('@/components/home'),
+        component: () => import('@/pages/Home/home'),
         meta: {
             title: '首页',
             icon: HomeOutlined,

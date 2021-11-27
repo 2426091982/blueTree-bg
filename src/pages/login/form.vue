@@ -1,16 +1,20 @@
 <script setup>
+import rules from "./rules";
+import validator from "./validator.vue";
+
 import { login } from "@/api";
 import { setToken } from "@/utils";
 import { reactive, ref, toRaw } from "vue";
 import { useRouter } from "vue-router";
-import rules from "./rules";
-import validator from "./validator.vue";
 import { message } from "ant-design-vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 const formRef = ref();
 const router = useRouter();
+let success = ref(false);
+let loading = ref(false);
+
 const labelCol = {
   span: 6,
 };
@@ -23,26 +27,33 @@ const formState = reactive({
   delivery: false,
 });
 const onSubmit = () => {
+  if (!success.value) {
+    message.warn("请先完成人机校验！");
+    return;
+  }
   formRef.value.validate().then(() => {
+    loading.value = true;
     let { name: username, password, delivery } = formState;
     login(username, password)
       .then((res) => {
         let token = res.token;
         if (token) {
-          store.commit('updateToken', token);
+          store.commit("updateToken", token);
           if (delivery) {
             // 存储token到本地，以后自动登录
             setToken(token);
           }
           router.push("/");
-          message.success(`欢迎您：${ username }`);
+          message.success(`欢迎您：${username}`);
         }
       })
       .catch(() => {
+        success.value = loading.value = false;
         message.error("用户名或密码错误！");
       });
   });
 };
+const verlidatorSuccess = () => (success.value = true);
 </script>
 
 <template>
@@ -74,12 +85,18 @@ const onSubmit = () => {
           placeholder="请输入您的密码"
         />
       </a-form-item>
-      <a-form-item label="自动登录">
+      <a-form-item label="人机校验" :wrapper-col="{ span: 16, offset: 0 }">
+        <validator
+          :success="success"
+          @verlidatorSuccess="verlidatorSuccess"
+        ></validator>
+      </a-form-item>
+      <a-form-item label="自动登录" :wrapper-col="{ span: 16, offset: 0 }">
         <a-switch v-model:checked="formState.delivery" />
       </a-form-item>
-      <validator></validator>
-      <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="onSubmit">登录</a-button>
+      <a-form-item :wrapper-col="{ span: 20, offset: 0 }">
+        <a-button class="login-but" type="primary" @click="onSubmit" :loading="loading">登录</a-button
+        >
       </a-form-item>
     </a-form>
   </div>
@@ -87,32 +104,50 @@ const onSubmit = () => {
 
 <style lang="less">
 .from-main {
-  position: relative;
-  top: -5%;
+  margin-top: 10px;
   display: flex;
   width: 600px;
   height: 350px;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.2);
+  // background-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+
   form {
     width: 400px;
-    label {
-      right: 10px;
-    }
+    user-select: none;
+
     .ant-form-item {
       justify-content: center;
+
       label {
+        right: 10px;
         font-size: 14px;
       }
+
       .ant-input {
-        height: 35px;
+        height: 40px;
       }
     }
+
     .ant-form-item-explain-error {
       font-size: 14px;
     }
+
+    .ant-form-item-control-input-content input {
+      border-radius: 20px;
+    }
   }
+
+  .ant-row.ant-form-item:last-child {
+    margin-bottom: 0;
+    text-align: center;
+  }
+}
+
+.login-but {
+  width: 160px;
+  height: 40px;
+  border-radius: 20px;
 }
 </style>

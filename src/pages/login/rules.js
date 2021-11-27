@@ -33,14 +33,14 @@ const validatorPassword = async (rule, value) => {
 const rules = {
     name: [
       {
-        required: true,
+        // required: true,
         // validator: validatorUserName,
         trigger: ["blur", "change"],
       },
     ],
     password: [
       {
-        required: true,
+        // required: true,
         // validator: validatorPassword,
         trigger: ["blur", "change"],
       },

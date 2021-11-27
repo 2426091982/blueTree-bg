@@ -1,2 +1,6 @@
-<template>classification</template>
+<template>
+    <div>
+        classification
+    </div>
+</template>
 <script setup></script>

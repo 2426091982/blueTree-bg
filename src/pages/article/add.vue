@@ -1,2 +1,4 @@
-<template>addArticle</template>
+<template>
+  <div>addArticle</div>
+</template>
 <script setup></script>

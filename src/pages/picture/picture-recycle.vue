@@ -63,64 +63,66 @@ const openDialog = () => {
 </script>
 
 <template>
-    <a-space direction="vertical" :size="size">
-        <a-space style="width: 100%" :size="size">
-            <div class="recycle-ops">
-                <a-button @click="triggerRecycle" type="primary">
-                    {{ isRecycle ? "取消批量恢复" : "批量恢复"}}
-                </a-button>
-                <a-button v-show="isRecycle" type="primary" style="margin-left: 20px;">
-                    恢复
-                </a-button>
-            </div>
-            <div class="delete-ops">
-                <a-button danger @click="triggerDelete" type="primary">
-                    {{ isDelete ? "取消批量删除" : "批量删除"}}
-                </a-button>
-                <a-button
-                    v-show="isDelete"
-                    type="primary"
-                    danger
-                    style="margin-left: 20px;"
-                    @click="visible = true"
-                >
-                    彻底删除
-                </a-button>
-            </div>
+    <div>
+        <a-space direction="vertical" :size="size">
+            <a-space style="width: 100%" :size="size">
+                <div class="recycle-ops">
+                    <a-button @click="triggerRecycle" type="primary">
+                        {{ isRecycle ? "取消批量恢复" : "批量恢复"}}
+                    </a-button>
+                    <a-button v-show="isRecycle" type="primary" style="margin-left: 20px;">
+                        恢复
+                    </a-button>
+                </div>
+                <div class="delete-ops">
+                    <a-button danger @click="triggerDelete" type="primary">
+                        {{ isDelete ? "取消批量删除" : "批量删除"}}
+                    </a-button>
+                    <a-button
+                        v-show="isDelete"
+                        type="primary"
+                        danger
+                        style="margin-left: 20px;"
+                        @click="visible = true"
+                    >
+                        彻底删除
+                    </a-button>
+                </div>
+            </a-space>
+            <a-space style="width: 100%" :size="size">
+                <a-input placeholder="文件名称模糊搜索" style="width: 300px"></a-input>
+                <a-range-picker></a-range-picker>
+            </a-space>
         </a-space>
-        <a-space style="width: 100%" :size="size">
-            <a-input placeholder="文件名称模糊搜索" style="width: 300px"></a-input>
-            <a-range-picker></a-range-picker>
-        </a-space>
-    </a-space>
 
-    <Select :data="imgs" :is-select="isSelect" style="margin-top: 20px;" class="picture" @select="selectImg">
-        <template #default="{ data }">
-            <a-image :src="data" />
-        </template>
+        <Select :data="imgs" :is-select="isSelect" style="margin-top: 20px;" class="picture" @select="selectImg">
+            <template #default="{ data }">
+                <a-image :src="data" />
+            </template>
 
-        <template #select-operation="{ data }">
-            <CheckCircleFilled
-                style="font-size: 30px;"
-                :class="{ active: selectedDatas.includes(data) }"
-            />
-        </template>
+            <template #select-operation="{ data }">
+                <CheckCircleFilled
+                    style="font-size: 30px;"
+                    :class="{ active: selectedDatas.includes(data) }"
+                />
+            </template>
 
-        <template #operation="{ data }">
-            <ReloadOutlined
-                style="font-size: 30px;"
-                title="恢复"
-            />
-            <DeleteFilled
-                style="font-size: 30px;"
-                title="彻底删除"
-                @click="deleteImg(data)"
-            />
-        </template>
-    </Select>
+            <template #operation="{ data }">
+                <ReloadOutlined
+                    style="font-size: 30px;"
+                    title="恢复"
+                />
+                <DeleteFilled
+                    style="font-size: 30px;"
+                    title="彻底删除"
+                    @click="deleteImg(data)"
+                />
+            </template>
+        </Select>
 
-    <a-modal :visible="visible" title="删除图片" @cancel="closeDialog" @ok="deleteImgs">
-        <a-image v-if="selectItem" :src="selectItem" />
-        <span v-show="!selectItem">确定删除所有选中图片吗?</span>
-    </a-modal>
+        <a-modal :visible="visible" title="删除图片" @cancel="closeDialog" @ok="deleteImgs">
+            <a-image v-if="selectItem" :src="selectItem" />
+            <span v-show="!selectItem">确定删除所有选中图片吗?</span>
+        </a-modal>
+    </div>
 </template>

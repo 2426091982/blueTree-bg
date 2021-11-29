@@ -13,13 +13,3 @@ export const getToken = () => window.localStorage.getItem('token');
 export const isNumber = (value) => {
     return !isNaN(value)
 }
-
-export const findParent = (el, className) => {
-    let parent = el;
-    while (parent) {
-        if (parent.classList.contains(className)) {
-            return parent;
-        };
-        parent = parent.parentNode;
-    }
-}

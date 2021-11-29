@@ -22,6 +22,7 @@ const selectedFile = (e) => {
     preventDefault(e);
     const file = (e.dataTransfer || e.target).files[0];
     files.value = file;
+    console.log(file, e.target.value);
     if (imgUrl.value) {
         URL.revokeObjectURL(imgUrl.value);
     }

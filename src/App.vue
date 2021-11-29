@@ -19,7 +19,7 @@ let collapsed = ref(false);
             <a-layout-sider v-model="collapsed" collapsible>
                 <NavBar />
             </a-layout-sider>
-            <a-layout class="container">
+            <a-layout>
                 <headerVue></headerVue>
                 <a-layout-content
                     style="
@@ -29,6 +29,7 @@ let collapsed = ref(false);
                         flex: 1;
                         overflow: hidden;
                     "
+                    class="container"
                 >
                     <BreadCrumb />
                     <switchRoute></switchRoute>
@@ -82,8 +83,7 @@ let collapsed = ref(false);
   background-color: #ddd;
   border-radius: 6px;
 }
-
-.contentBox {
+.container > .switchRoute {
     padding: 24px;
     background: #fff;
     min-height: 360px;

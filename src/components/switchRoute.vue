@@ -32,9 +32,9 @@ let state = useStore().state.token;
   opacity: 0!important;
 }
 
-.switchRoute {
-  height: 100%;
-  opacity: 1;
-  position: relative;
-}
+// .switchRoute {
+//   height: 100%;
+//   opacity: 1;
+//   position: relative;
+// }
 </style>

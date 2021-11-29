@@ -112,6 +112,10 @@ img {
     border-radius: 16px;
     margin: 20px 0;
     cursor: pointer;
+
+    &:last-child {
+        margin: 0;
+    }
 }
 
 .tips {

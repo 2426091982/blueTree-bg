@@ -5,6 +5,7 @@ const route = useRoute();
 const openKeys = ref([]);
 const selectedKeys = ref([]);
 
+
 watch(
     route,
     () => {
@@ -33,7 +34,7 @@ watch(
     <div class="logo">蓝树林官网后台</div>
     <a-menu theme="dark" mode="inline" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" class="navs">
         <template v-for="item in $router.options.routes">
-            <template v-if="item.children">
+            <template v-if="item.children && !item.meta.noRender">
                 <a-sub-menu :key="item.path">
                     <template #title>
                         <component
@@ -60,8 +61,7 @@ watch(
                     </a-menu-item>
                 </a-sub-menu>
             </template>
-
-            <template v-else>
+            <template v-else-if="!item.meta.noRender">
                 <a-menu-item
                     :key="`${item.path}`"
                     @click="$router.push(item.path)"

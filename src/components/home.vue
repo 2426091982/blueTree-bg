@@ -1,5 +1,7 @@
 <template>
-  123123
+  <div>
+    This is home.
+  </div>
 </template>
 <script>
 export default {

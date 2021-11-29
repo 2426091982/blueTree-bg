@@ -3,11 +3,20 @@ import {
   SettingOutlined,
   HomeOutlined,
   FormOutlined,
+  PictureOutlined
 } from "@ant-design/icons-vue";
 
 import fragment from "@/components/fragment"; // <router-view />
 
 const routes = defineRoutes([
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/pages/login"),
+    meta: {
+      noRender: true,
+    },
+  },
   {
     path: "/",
     name: "home",
@@ -19,28 +28,28 @@ const routes = defineRoutes([
   },
   {
     path: "/setting",
+    component: fragment,
+    redirect: "/setting/page",
     meta: {
       title: "基本配置",
       icon: SettingOutlined,
     },
-    component: fragment,
-    redirect: "/setting/page",
     children: [
-      {
-        path: "page",
-        component: () => import("@/pages/settings/page"),
-        meta: {
-          title: "页面配置",
+        {
+          path: "page",
+          component: () => import("@/pages/settings/page"),
+          meta: {
+            title: "页面配置",
+          },
         },
-      },
-      {
-        path: "banner",
-        component: () => import("@/pages/settings/banner"),
-        meta: {
-          title: "轮播图管理",
+        {
+          path: "banner",
+          component: () => import("@/pages/settings/banner"),
+          meta: {
+            title: "轮播图管理",
+          },
         },
-      },
-    ],
+      ],
   },
   {
     path: "/article",
@@ -74,7 +83,33 @@ const routes = defineRoutes([
       },
     ],
   },
+  {
+    path: "/picture",
+    component: () => import("@/pages/picture/picture"),
+    redirect: "/picture/list",
+    meta: {
+      icon: PictureOutlined,
+      title: "图片管理",
+    },
+    children: [
+      {
+        path: "list",
+        component: () => import("@/pages/picture/picture-list"),
+        meta: {
+          title: "图片列表",
+        },
+      },
+      {
+        path: "recycle",
+        component: () => import("@/pages/picture/picture-recycle"),
+        meta: {
+          title: "图片回收站",
+        },
+      },
+    ],
+  },
 ]);
 
 // 1.
+
 export default routes;

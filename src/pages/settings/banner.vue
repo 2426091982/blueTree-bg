@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    轮播图管理
+    <div>轮播图管理</div>
 </template>

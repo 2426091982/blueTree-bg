@@ -1,3 +1,8 @@
+<script setup>
+import switchRoute from "@/components/switchRoute.vue";
+</script>
+
+
 <template>
-    <router-view />
+  <switchRoute></switchRoute>
 </template>

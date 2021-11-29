@@ -58,8 +58,8 @@ const selectImg = (data) => {
 </script>
 
 <template>
-    <div>
-        <a-space direction="vertical" :size="size">
+    <div class="picture-list">
+        <a-space direction="vertical" :size="size" key="1">
             <a-space style="width: 100%" :size="size">
                 <a-button type="primary" @click="visible = true">上传图片</a-button>
                 <a-button danger @click="isSelect = !isSelect" type="primary">
@@ -75,7 +75,7 @@ const selectImg = (data) => {
             </a-space>
         </a-space>
         
-        <Select class="img-list picture" :data="imgs" style="margin-top: 20px;" :isSelect="isSelect" @select="selectImg">
+        <Select class="img-list picture" :data="imgs" style="margin-top: 20px;" :isSelect="isSelect" @select="selectImg" key="2">
             <template #default="{ data }">
                 <a-image :src="data" />
             </template>
@@ -90,7 +90,7 @@ const selectImg = (data) => {
             </template>
         </Select>
         
-        <a-modal :visible="visible" @cancel="closeModal" @ok="closeModal">
+        <a-modal :visible="visible" @cancel="closeModal" @ok="closeModal" key="3">
             <template #title> 新增图片 </template>
             <div
                 class="upload-box"

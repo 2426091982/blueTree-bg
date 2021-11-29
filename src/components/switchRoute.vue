@@ -5,13 +5,13 @@ let state = useStore().state.token;
 </script>
 
 <template>
-  <div class="switchRoute">
-      <router-view v-slot="{ Component, route }">
-        <transition name="switchRoute" mode="out-in" v-if="state && !route.meta.noRender">
-          <component :is="Component" :key="route.path" />
-        </transition>
-      </router-view>
-  </div>
+    <div class="switchRoute">
+        <router-view v-slot="{ Component, route }">
+            <transition name="switchRoute" mode="out-in" v-if="state && !route.meta.noRender">
+                <component :is="Component" :key="route.path" />
+            </transition>
+        </router-view>
+    </div>
 </template>
 
 <style lang="less">

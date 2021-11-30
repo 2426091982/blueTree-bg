@@ -1,14 +1,12 @@
 <script setup>
 import { useStore } from "vuex";
-
-let state = useStore().state.token;
 </script>
 
 <template>
   <div class="switchRoute">
     <slot>
       <router-view v-slot="{ Component, route }">
-        <transition name="switchRoute" mode="out-in" v-if="state && !route.meta.noRender">
+        <transition name="switchRoute" mode="out-in" >
           <component :is="Component" :key="route.path" />
         </transition>
       </router-view>

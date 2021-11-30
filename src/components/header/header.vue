@@ -23,7 +23,7 @@ const logout = () => {
           <template #icon><UserOutlined /></template>
         </a-avatar>
       </a>
-      <template #overlay>
+      <!-- <template #overlay>
         <a-menu>
           <a-menu-item>
             <a href="javascript:;">1st menu item</a>
@@ -35,7 +35,7 @@ const logout = () => {
             <a href="javascript:;">3rd menu item</a>
           </a-menu-item>
         </a-menu>
-      </template>
+      </template> -->
     </a-dropdown>
     <a-popconfirm
       title="你确定退出登录吗？"

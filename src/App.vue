@@ -1,6 +1,4 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import NavBar from "@/components/sidebar/sidebar";
 import BreadCrumb from "@/components/breadcrumb";
 import headerVue from "@/components/header/header.vue";
@@ -48,9 +46,7 @@ let collapsed = ref(false);
           </a-layout-footer>
         </a-layout>
       </a-layout>
-      <div class="switchRoute" v-else>
-        <router-view />
-      </div>
+      <switchRoute v-else></switchRoute>
     </transition>
   </a-config-provider>
 </template> 
@@ -68,13 +64,17 @@ let collapsed = ref(false);
 
 #components-layout-demo-side .logo {
   height: 32px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0                                                                                                                                                                                                                              .2);
   margin: 16px;
 }
 .logo {
   font-size: 18px;
   text-align: center;
   color: #fff;
+}
+
+body {
+  background-color: #00000060;
 }
 
 #app {

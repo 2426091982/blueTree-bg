@@ -4,5 +4,5 @@ import switchRoute from "@/components/switchRoute.vue";
 
 
 <template>
-  <switchRoute></switchRoute>
+  <switchRoute class="contentBox"></switchRoute>
 </template>

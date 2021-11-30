@@ -1,7 +1,3 @@
-<script setup>
-import { useStore } from "vuex";
-</script>
-
 <template>
   <div class="switchRoute">
     <slot>
@@ -15,17 +11,25 @@ import { useStore } from "vuex";
 </template>
 
 <style lang="less">
+// .switchRoute-leave-active {
+//   position: absolute!important;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+// }
 .switchRoute-enter-active,
 .switchRoute-leave-active {
-  transition: all 0.5s linear;
+  transition: all .5s;
 }
 
 .switchRoute-enter-from,
 .switchRoute-leave-to {
-  opacity: 0;
+  opacity: 0!important;
 }
 
 .switchRoute {
   height: 100%;
+  // opacity: 1;
+  // position: relative;
 }
 </style>

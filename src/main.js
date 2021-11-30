@@ -1,10 +1,9 @@
 import { createApp } from "vue";
 import { message } from "ant-design-vue";
-
+import store from "@/store/index"
 import App from "./App.vue";
 import router from "./router/index";
-import "ant-design-vue/lib/message/style/index.css";
-import store from "./store";
+import "ant-design-vue/dist/antd.css";
 
 message.config({ // 配置全局提示信息
     duration: 2,

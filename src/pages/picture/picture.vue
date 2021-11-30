@@ -3,7 +3,7 @@ import switchRoute from '@/components/switchRoute.vue';
 </script>
 
 <template>
-  <switchRoute></switchRoute>
+  <switchRoute class="contentBox" />
 </template>
 
 <style lang="less">

@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  <div>addArticle</div>
+
 </template>

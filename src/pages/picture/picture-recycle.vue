@@ -63,7 +63,7 @@ const openDialog = () => {
 </script>
 
 <template>
-    <div>
+    <div class="picture-recycle">
         <a-space direction="vertical" :size="size">
             <a-space style="width: 100%" :size="size">
                 <div class="recycle-ops">

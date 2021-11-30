@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.1",
-    "ant-design-vue": "^2.2.8",
+    "ant-design-vue": "^3.0.0-alpha.12",
     "axios": "^0.24.0",
     "loadsh": "^0.0.4",
     "vue": "^3.2.16",

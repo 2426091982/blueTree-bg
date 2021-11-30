@@ -2,7 +2,7 @@
 import { SkinTwoTone } from "@ant-design/icons-vue";
 import { reactive, ref } from "@vue/reactivity";
 import formData from "./form.vue";
-// import switchImg from "./switchImg.vue";
+import switchImg from "./switchImg.vue";
 // import uploadImg from "@/components/upload/upload.vue";
 
 let imageUrl = ref("");

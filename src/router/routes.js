@@ -56,6 +56,7 @@ const routes = defineRoutes([
     meta: {
       title: "文章管理",
       icon: FormOutlined,
+      className: "123123"
     },
     component: fragment,
     redirect: "/article/list",

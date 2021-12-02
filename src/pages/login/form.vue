@@ -110,8 +110,9 @@ const verlidatorSuccess = () => (success.value = true);
   height: 350px;
   justify-content: center;
   align-items: center;
-  // background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
 
   form {
     width: 400px;

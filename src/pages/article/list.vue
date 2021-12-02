@@ -1,6 +1,8 @@
 <script setup>
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { defineComponent, reactive, ref, toRefs, computed } from "vue";
+// 导入api
+import { getArticleList } from "@/api/article";
 // 数据
 const data = [
   {
@@ -81,6 +83,10 @@ const data = [
     recommended: true,
   },
 ];
+
+getArticleList().then((res) => {
+  console.log(res);
+});
 
 // 保存的状态
 const state = reactive({

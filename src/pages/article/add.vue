@@ -2,44 +2,15 @@
 import { UploadOutlined } from "@ant-design/icons-vue";
 import { defineComponent, ref, reactive } from "vue";
 import dayjs from "dayjs";
+import { useRouter, useRoute } from "vue-router";
+import { getArticle } from "@/api/article";
+import { uploadImage } from "@/api/image";
+const route = useRoute();
+// 获取文章id
+const articleId = route.query.id;
 
-// 已经上传的封面列表
-let fileList = reactive([]);
-// 上传文件
-const uploadIcon = (file, list) => {
-  console.log(file);
-  console.log(list);
-  return false;
-};
-
-// 保存html格式
-const saveHtml = (h) => {
-  console.log(h);
-};
-// 上传图片(暂未写完)
-const onUploadImg = (files, callback) => {
-  /* const res = await Promise.all(
-    Array.from(files).map((file) => {
-      return new Promise((rev, rej) => {
-        const form = new FormData();
-        form.append("file", file);
-
-        axios
-          .post("/api/img/upload", form, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => rev(res))
-          .catch((error) => rej(error));
-      });
-    })
-  );
-
-  callback(res.map((item) => item.data.url)); */
-};
 // 表单值
-const formState = reactive({
+const formState = ref({
   // 文章标题
   title: "",
   // 分类
@@ -59,8 +30,39 @@ const formState = reactive({
   // 描述seo
   describeSEO: "",
   // 是否推荐文章
-  Recommended: true,
+  Recommended: false,
 });
+
+// 判断是否有id,有就是修改，没有就是新增
+if (articleId) {
+  getArticle(articleId).then((res) => {
+    console.log(res,123123);
+    formState.value = res;
+    formState.value.classification = res.category;
+    formState.value.describe = res.description;
+    formState.value.icon = res.cover;
+    formState.value.Recommended = res.nominate === 1;
+  });
+} else {
+}
+
+// 已经上传的封面列表
+let fileList = reactive([]);
+// 上传文件
+const uploadIcon = (file, list) => {
+  let form = new FormData()
+  form.set("image", file)
+  console.log(form);
+  uploadImage(form).then(res => {
+    console.log(res);
+  })
+  return false;
+};
+
+// 保存html格式
+const saveHtml = (h) => {
+  // console.log(h);
+};
 
 // 表单规则
 const formRules = {
@@ -83,8 +85,7 @@ const wrapperCol = {
 
 const textareaRows = 4;
 
-let content = ref("");
-// 添加文字
+// 添加文章
 const addNewArticle = (e) => {
   console.log(formState);
 };
@@ -161,7 +162,7 @@ const addNewArticle = (e) => {
 
     <a-form-item>
       <MdEditorV3
-        v-model="content"
+        v-model="formState.content"
         @onHtmlChanged="saveHtml"
         @onUploadImg="onUploadImg"
       />

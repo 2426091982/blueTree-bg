@@ -20,15 +20,17 @@ const routes = defineRoutes([
   {
     path: "/",
     name: "home",
-    component: () => import("@/components/home"),
+    component: () => import("@/pages/Home/home"),
     meta: {
       title: "首页",
       icon: HomeOutlined,
+      noBreadCrumb: true,
+
     },
   },
   {
     path: "/setting",
-    component: fragment,
+    component: () => import("@/pages/settings/setting"),
     redirect: "/setting/page",
     meta: {
       title: "基本配置",
@@ -110,7 +112,5 @@ const routes = defineRoutes([
     ],
   },
 ]);
-
-// 1.
 
 export default routes;

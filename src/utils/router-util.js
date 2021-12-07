@@ -11,6 +11,8 @@
  * @param {object} routes[].meta
  * @param {string} routes[].meta.title 导航栏标题
  * @param {string} routes[].meta.icon 导航栏图标
+ * @param {string} routes[].meta.noRender 是否渲染导航栏
+ * @param {string} routes[].meta.noBreadCrumb 是否渲染面包屑
  * @param {any} routes[].components
  * @param {any} routes[].component
  * @returns routes

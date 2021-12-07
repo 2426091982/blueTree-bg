@@ -1,18 +1,7 @@
 <script setup>
 import { UserOutlined } from "@ant-design/icons-vue";
-import { message } from "ant-design-vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { setToken } from "@/utils";
+import { logout } from "@/utils";
 
-const router = useRouter();
-const store = useStore();
-const logout = () => {
-  setToken("");
-  store.commit("updateToken", "");
-  router.push("/login");
-  message.success("退出登录成功！");
-};
 </script>
 
 <template>

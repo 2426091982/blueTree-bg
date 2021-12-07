@@ -1,16 +1,21 @@
 <script setup>
 import { UploadOutlined, CheckCircleFilled, DeleteFilled } from "@ant-design/icons-vue";
-import { reactive, ref } from "vue";
+import { message } from "ant-design-vue";
+import { ref, computed, effect } from "vue";
+import { useStore } from "vuex";
 
 import Select from "@/components/select";
 import { preventDefault } from "@/utils";
-import { getAllImage } from "@/api";
+import { uploadImage, deleteImage } from "@/api";
+import { mapState } from "@/store";
 
 const size = 20;
+const store = useStore();
 
 let input = document.createElement("input");
 input.type = "file";
 input.accept = "image/*";
+// input.multiple = true;
 
 // 上传图片
 const files = ref(null);
@@ -22,7 +27,6 @@ const selectedFile = (e) => {
     preventDefault(e);
     const file = (e.dataTransfer || e.target).files[0];
     files.value = file;
-    console.log(file, e.target.value);
     if (imgUrl.value) {
         URL.revokeObjectURL(imgUrl.value);
     }
@@ -36,17 +40,21 @@ const visible = ref(false);
 const closeModal = () => {
     visible.value = false;
 };
+const ok = async () => {
+    if (files.value) {
+        let image = new FormData()
+        image.set("image", files.value);
+        let newImage = await uploadImage(image);
+        store.commit("image/addImages", newImage);
+    }
+    closeModal()
+}
 
 // Select 组件
-const imgs = [
-  "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
-  "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-  "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
-  "https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg",
-  "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg",
-  "https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg",
-  "https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg",
-];
+const {
+    images: imgs
+} = mapState("image", ["images"])
+store.dispatch("image/getImages");
 const isSelect = ref(false);
 const selectedDatas = ref([]);
 const selectImg = (data) => {
@@ -55,6 +63,14 @@ const selectImg = (data) => {
     };
     selectedDatas.value.push(data);
 };
+const imageTorecycle = async (id) => {
+    let res = await deleteImage(id);
+    message.success("移至回收站成功")
+}
+
+effect(() => {
+    console.log(imgs);
+})
 
 </script>
 
@@ -76,9 +92,18 @@ const selectImg = (data) => {
             </a-space>
         </a-space>
         
-        <Select class="img-list picture" :data="imgs" style="margin-top: 20px;" :isSelect="isSelect" @select="selectImg" key="2">
+        <Select
+            class="img-list picture"
+            :data="imgs"
+            style="margin-top: 20px;"
+            :isSelect="isSelect"
+            @select="selectImg"
+            key="2"
+        >
             <template #default="{ data }">
-                <a-image :src="data" />
+                <a-image
+                    :src="data.url"
+                />
             </template>
             <template #select-operation="{ data }">
                 <CheckCircleFilled
@@ -86,12 +111,16 @@ const selectImg = (data) => {
                     :class="{ active: selectedDatas.includes(data) }"
                 />
             </template>
-            <template #operation>
-                <DeleteFilled title="删除至回收站" style="font-size: 30px;"/>
+            <template #operation="{ data }">
+                <DeleteFilled
+                    title="删除至回收站"
+                    style="font-size: 30px;"
+                    @click="imageTorecycle(data.id)"
+                />
             </template>
         </Select>
         
-        <a-modal :visible="visible" @cancel="closeModal" @ok="closeModal" key="3">
+        <a-modal :visible="visible" @cancel="closeModal" @ok="ok" key="3">
             <template #title> 新增图片 </template>
             <div
                 class="upload-box"

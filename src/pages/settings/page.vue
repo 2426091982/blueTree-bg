@@ -2,14 +2,14 @@
 import { reactive } from "@vue/reactivity";
 
 const formState = reactive({
-    title: "",
-    logo: "",
-    ico: "",
-    keywords: "",
-    descriptions: "",
-    copy: "",
-    ipc: "",
-    ip: "",
+    title: "",  // 网站标题
+    logo: "",   // LOGO配置
+    ico: "",    // 选项卡logo
+    keywords: "",  // 站点关键词
+    descriptions: "",  // 站点描述
+    copy: "",  // 版权信息
+    ipc: "",   // IPC备案信息
+    ip: "",    // 公安备案信息
 });
 
 const formRules = {
@@ -97,7 +97,7 @@ const textareaRows = 4;
 </template>
 
 <style lang="less" scoped>
-/deep/ .ant-form-item-control {
+:deep(.ant-form-item-control) {
     margin-bottom: 10px;
 }
 </style>

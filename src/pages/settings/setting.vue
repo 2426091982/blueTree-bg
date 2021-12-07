@@ -1,8 +1,14 @@
 <script setup>
-import switchRoute from "@/components/switchRoute.vue";
+import { getSettings } from '@/api/settings';
+
+getSettings().then(res => {
+    console.log(res);
+})
+
+console.log(123);
 </script>
 
 
 <template>
-  <switchRoute class="contentBox"></switchRoute>
+    <router-view />
 </template>

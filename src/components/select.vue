@@ -32,6 +32,8 @@ const emit = defineEmits(["select"])
 <style lang="less">
 .select-container {
     column-count: 4;
+    // break-inside: avoid-page;
+    padding: 6px 0;
 }
 
 @media screen and (max-width: 1400px) {

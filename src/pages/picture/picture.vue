@@ -1,9 +1,11 @@
 <script setup>
-import switchRoute from '@/components/switchRoute.vue';
+import { getAllImage } from '@/api';
+// import switchRoute from '@/components/switchRoute.vue';
+
 </script>
 
 <template>
-  <switchRoute class="contentBox" />
+  <router-view />
 </template>
 
 <style lang="less">

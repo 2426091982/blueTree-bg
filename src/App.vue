@@ -1,6 +1,4 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import NavBar from "@/components/sidebar/sidebar";
 import BreadCrumb from "@/components/breadcrumb";
 import headerVue from "@/components/header/header.vue";
@@ -32,16 +30,14 @@ let collapsed = ref(false);
                     class="container"
                 >
                     <BreadCrumb />
-                    <switchRoute></switchRoute>
+                    <switchRoute :class="{ noBreadcrumb: $route.meta.noBreadCrumb }"></switchRoute>
                 </a-layout-content>
                 <a-layout-footer style="text-align: center; padding: 6px 0">
                     footer
                 </a-layout-footer>
             </a-layout>
         </a-layout>
-        <div class="switchRoute" v-else>
-            <router-view />
-        </div>
+        <switchRoute class="login-container" v-else />
     </transition>
   </a-config-provider>
 </template> 
@@ -90,5 +86,9 @@ let collapsed = ref(false);
     flex: 1;
     overflow-y: scroll;
     opacity: 1;
+}
+
+.login-container {
+    height: 100%;
 }
 </style>

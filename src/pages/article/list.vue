@@ -170,7 +170,7 @@ const handleReset = (clearFilters) => {
 };
 </script>
 <template>
-    <!-- <div class="article-list"> -->
+    <div class="article-list">
         <div style="margin-bottom: 16px">
             <a-space :size="10">
                 <a-button
@@ -280,5 +280,5 @@ const handleReset = (clearFilters) => {
                 </template>
             </template>
         </a-table>
-    <!-- </div> -->
+    </div>
 </template>

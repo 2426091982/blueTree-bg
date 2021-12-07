@@ -1,7 +1,7 @@
 <script setup>
-import switchRoute from "./switchRoute.vue";
+// import switchRoute from "./switchRoute.vue";
 </script>
 
 <template>
-  <switchRoute class="contentBox"></switchRoute>
+  <router-view />
 </template>

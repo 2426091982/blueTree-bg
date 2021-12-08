@@ -2,8 +2,14 @@
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { defineComponent, reactive, ref, toRefs, computed } from "vue";
 import { useRouter } from "vue-router";
+import { message } from "ant-design-vue";
+
 // 导入api
-import { getArticleList } from "@/api/article";
+import {
+  getArticleList,
+  removeArticle,
+  getArticleCategory,
+} from "@/api/article";
 const router = useRouter();
 // 数据
 let dataList = ref([
@@ -17,15 +23,31 @@ let dataList = ref([
   //   category: "news-company"
   // },
 ]);
-
-// 获取文章列表
-getArticleList().then((res) => {
-  console.log(res);
-  dataList.value = res;
-  dataList.value.map((item) => {
-    item.key = item.id;
+const articleCategoryList = ref();
+// 初始化
+const init = () => {
+  // 读取文章分类列表
+  getArticleCategory().then((res) => {
+    articleCategoryList.value = res;
+    console.log(articleCategoryList.value);
+    // 获取文章列表
+    getArticleList().then((res) => {
+      console.log(res);
+      dataList.value = res;
+      dataList.value.map((item) => {
+        item.key = item.id;
+        // 遍历分类数组
+        articleCategoryList.value.forEach((item2) => {
+          if (item.category == item2.id) {
+            item.categoryName = item2.name;
+          }
+        });
+      });
+      console.log(dataList.value);
+    });
   });
-});
+};
+init();
 
 // 保存的状态
 const state = reactive({
@@ -42,13 +64,18 @@ const searchInput = ref();
 const hasSelected = computed(() => state.selectedRowKeys.length > 0);
 
 // 取消全选
-const start = () => {
+const remove = () => {
   state.loading = true; // ajax request after empty completing
 
-  setTimeout(() => {
-    state.loading = false;
-    state.selectedRowKeys = [];
-  }, 1000);
+  console.log(state.selectedRowKeys);
+  state.selectedRowKeys.forEach((item) => {
+    removeArticle(item).then((res) => {
+      console.log(res);
+      state.loading = false;
+      message.success("删除文章成功!");
+      init();
+    });
+  });
 };
 
 const onSelectChange = (Keys) => {
@@ -88,6 +115,11 @@ const columns = [
     key: "nominate",
   },
   {
+    title: "是否可见",
+    dataIndex: "visibility",
+    key: "visibility",
+  },
+  {
     title: "更新日期",
     dataIndex: "date",
     key: "date",
@@ -124,19 +156,14 @@ const handleReset = (clearFilters) => {
   <!-- <div class="article-list"> -->
   <div style="margin-bottom: 16px">
     <a-space :size="10">
-      <a-button
-        type="primary"
-        :disabled="!hasSelected"
-        :loading="loading"
-        @click="start"
-      >
+      <a-button type="primary" @click="router.push('/article/add')">
         新增
       </a-button>
       <a-button
         type="primary"
         :disabled="!hasSelected"
         :loading="loading"
-        @click="start"
+        @click="remove"
         danger
       >
         删除
@@ -219,7 +246,17 @@ const handleReset = (clearFilters) => {
 
       <template v-if="column.key === 'nominate'">
         <span style="color: #1890ff">
-          {{ record.nominate ? "是" : "否" }}
+          <a-tag v-if="record.nominate" color="green">推荐</a-tag>
+          <a-tag v-else color="red">不推荐</a-tag>
+        </span>
+      </template>
+      <template v-if="column.key === 'category'">
+        <a-tag color="blue">{{ record.categoryName }}</a-tag>
+      </template>
+      <template v-if="column.key === 'visibility'">
+        <span style="color: #1890ff">
+          <a-tag v-if="record.visibility" color="green">可见</a-tag>
+          <a-tag v-else color="red">不可见</a-tag>
         </span>
       </template>
 

@@ -1,19 +1,68 @@
 <script setup>
 import { SearchOutlined } from "@ant-design/icons-vue";
 import { defineComponent, reactive, ref, toRefs, computed } from "vue";
+import { message } from "ant-design-vue";
+import {
+  getArticleCategory,
+  addArticleCategory,
+  updateArticleCategory,
+  removeArticleCategory,
+} from "@/api/article";
+
+const inputValue = ref();
+const updateId = ref();
 // 数据
-const data = [
+const data = ref([
   {
-    key: "1",
-    classificationId: 0,
-    date: "2021/11/28",
+    name: "ssss",
+    id: 1,
   },
-  {
-    key: "2",
-    classificationId: 1,
-    date: "2021/11/28",
-  },
-];
+]);
+
+// 初始化
+const init = () => {
+  getArticleCategory().then((res) => {
+    console.log(res);
+    data.value = res;
+    data.value.map((item) => {
+      item.key = item.id;
+    });
+    inputValue.value = "";
+    updateId.value = "";
+    state.selectedRowKeys = [];
+  });
+};
+init();
+
+const visible = ref(false);
+
+// 模态框
+const showModal = (record) => {
+  if (record) {
+    inputValue.value = record.name;
+    updateId.value = record.id;
+  }
+  visible.value = true;
+};
+
+const handleOk = (e) => {
+  if (inputValue.value && updateId.value) {
+    // 修改分类
+    updateArticleCategory(updateId.value, inputValue.value).then((res) => {
+      message.success("修改分类成功!");
+
+      init();
+    });
+  } else if (inputValue.value) {
+    // 添加分类
+    addArticleCategory(inputValue.value).then((res) => {
+      message.success("新增分类成功!");
+
+      init();
+    });
+  }
+  visible.value = false;
+};
 
 // 保存的状态
 const state = reactive({
@@ -29,14 +78,18 @@ const searchInput = ref();
 // 是否全选
 const hasSelected = computed(() => state.selectedRowKeys.length > 0);
 
-// 取消全选
-const start = () => {
+// 删除分类
+const removeCategory = () => {
   state.loading = true; // ajax request after empty completing
-
-  setTimeout(() => {
-    state.loading = false;
-    state.selectedRowKeys = [];
-  }, 1000);
+  console.log(state.selectedRowKeys);
+  state.selectedRowKeys.forEach((item) => {
+    removeArticleCategory(item).then((res) => {
+      console.log(res);
+      state.loading = false;
+      message.success("删除分类成功!");
+      init();
+    });
+  });
 };
 
 const onSelectChange = (selectedRowKeys) => {
@@ -51,21 +104,6 @@ const columns = [
     customFilterDropdown: true,
     onFilter: (value, record) =>
       record.name.toString().toLowerCase().includes(value.toLowerCase()),
-    onFilterDropdownVisibleChange: (visible) => {
-      if (visible) {
-        setTimeout(() => {
-          searchInput.value.focus();
-        }, 100);
-      }
-    },
-  },
-  {
-    title: "更新日期",
-    dataIndex: "date",
-    key: "date",
-    customFilterDropdown: true,
-    onFilter: (value, record) =>
-      record.address.toString().toLowerCase().includes(value.toLowerCase()),
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => {
@@ -95,19 +133,12 @@ const handleReset = (clearFilters) => {
 <template>
   <div style="margin-bottom: 16px">
     <a-space :size="10">
-      <a-button
-        type="primary"
-        :disabled="!hasSelected"
-        :loading="loading"
-        @click="start"
-      >
-        新增
-      </a-button>
+      <a-button type="primary" @click="showModal"> 新增 </a-button>
       <a-button
         type="danger"
         :disabled="!hasSelected"
         :loading="loading"
-        @click="start"
+        @click="removeCategory"
       >
         删除
       </a-button>
@@ -187,14 +218,15 @@ const handleReset = (clearFilters) => {
 
       <template v-if="column.key === 'classificationId'">
         <div>
-          <a-tag v-if="record.classificationId == 0" color="pink">资讯文章</a-tag>
-          <a-tag v-else-if="record.classificationId == 1" color="blue">新闻动态</a-tag>
-
+          <a-tag color="pink">{{ record.name }}</a-tag>
         </div>
       </template>
       <template v-if="column.key === 'operation'">
-        <a>修改分类名称</a>
-      </template>
-    </template>
+        <a @click="showModal(record)">修改分类名称</a>
+      </template> </template
+    >+
   </a-table>
+  <a-modal v-model:visible="visible" title="设置分类名称" @ok="handleOk">
+    <a-input v-model:value="inputValue"></a-input>
+  </a-modal>
 </template>

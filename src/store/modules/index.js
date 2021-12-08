@@ -1,7 +1,7 @@
-import setting from "./settings";
+import settings from "./settings";
 import image from "./image";
 
 export default {
-    setting,
+    settings,
     image,
 }

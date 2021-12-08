@@ -12,6 +12,8 @@
     "ant-design-vue": "^3.0.0-alpha.12",
     "axios": "^0.24.0",
     "loadsh": "^0.0.4",
+    "mavon-editor": "^2.10.0",
+    "md-editor-v3": "^1.7.2",
     "vue": "^3.2.16",
     "vue-router": "4",
     "vuex": "4"

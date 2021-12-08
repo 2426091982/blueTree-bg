@@ -2,8 +2,7 @@
 import { ref } from "vue";
 import { message } from "ant-design-vue";
 import { DeleteFilled, ReloadOutlined, CheckCircleFilled } from "@ant-design/icons-vue"
-import Select from "@/components/select";
-import "ant-design-vue/es/message/style/index.css";
+import Select from "./select";
 
 const size = 20;
 

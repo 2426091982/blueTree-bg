@@ -8,6 +8,16 @@ defineProps({
     isSelect: {
         default: false,
         type: Boolean,
+    },
+    column: {
+        type: Object,
+        default: () => ({
+            default: 4,
+            1400: 3,
+            1200: 2,
+            900: 1,
+            all: null,
+        })
     }
 });
 const emit = defineEmits(["select"])
@@ -31,26 +41,26 @@ const emit = defineEmits(["select"])
 
 <style lang="less">
 .select-container {
-    column-count: 4;
+    column-count: v-bind('column.all || column.default');
     // break-inside: avoid-page;
     padding: 6px 0;
 }
 
 @media screen and (max-width: 1400px) {
     .select-container {
-        column-count: 3;
+        column-count: v-bind('column.all || column["1400"]');
     }
 }
 
 @media screen and (max-width: 1200px) {
     .select-container {
-        column-count: 2;
+        column-count: v-bind('column.all || column["1200"]');
     }
 }
 
 @media screen and (max-width: 900px) {
     .select-container {
-        column-count: 1;
+        column-count: v-bind('column.all || column["900"]');
     }
 }
 

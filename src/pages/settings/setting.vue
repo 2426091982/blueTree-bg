@@ -1,11 +1,7 @@
 <script setup>
-import { getSettings } from '@/api/settings';
+import store from '@/store';
 
-getSettings().then(res => {
-    console.log(res);
-})
-
-console.log(123);
+store.dispatch("settings/getSettings");
 </script>
 
 

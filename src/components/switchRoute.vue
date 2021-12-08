@@ -1,16 +1,13 @@
-<script setup>
-import { useStore } from "vuex";
-
-</script>
-
 <template>
-    <div class="switchRoute">
-        <router-view v-slot="{ Component, route }">
-            <transition name="switchRoute" mode="out-in">
-                <component :is="Component" :key="route.path" />
-            </transition>
-        </router-view>
-    </div>
+  <div class="switchRoute">
+    <slot>
+      <router-view v-slot="{ Component, route }">
+        <transition name="switchRoute" mode="out-in" >
+          <component :is="Component" :key="route.path" />
+        </transition>
+      </router-view>
+    </slot>
+  </div>
 </template>
 
 <style lang="less">
@@ -23,7 +20,6 @@ import { useStore } from "vuex";
 .switchRoute-enter-active,
 .switchRoute-leave-active {
   transition: all .5s;
-
 }
 
 .switchRoute-enter-from,

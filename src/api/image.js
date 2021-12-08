@@ -5,9 +5,10 @@ export const getAllImage = () => {
 }
 
 export const uploadImage = (data) => {
+    console.log(data);
     return axios.post("/images", data)
 };
 
 export const deleteImage = (id) => {
-    return axios.delete(`/images/${id}`);
+    // return axios.delete(`/images/${id}`);
 }

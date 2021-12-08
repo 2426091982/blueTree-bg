@@ -1,11 +1,10 @@
-import { getToken } from '@/utils';
 import { computed } from "vue";
 import { createStore } from 'vuex';
 import modules from './modules';
 
 const store = createStore({
     state() {
-        let token =  getToken() || "";
+        let token =  window.localStorage.getItem('token') || "";
         return {
             token
         }
@@ -32,7 +31,6 @@ export const mapState = (namespaced, keys) => {
         namespaced = transformNamespaced(namespaced);
     };
     let state = namespaced.reduce((state, item) => {
-        console.log(item);
         return state[item]
     }, store.state);
 

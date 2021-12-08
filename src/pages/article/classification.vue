@@ -126,7 +126,7 @@ const handleReset = (clearFilters) => {
       onChange: onSelectChange,
     }"
   >
-    <template #headerCell="{ column, record }">
+    <template #headerCell="{ column }">
       <template v-if="column.key === 'title'">
         <span style="color: #1890ff">文章标题</span>
       </template>

@@ -1,4 +1,4 @@
-import { getAllImage } from "@/api";
+import { getAllImage, uploadImage } from "@/api";
 
 const StoreModuleImage = {
     namespaced: true,
@@ -17,6 +17,12 @@ const StoreModuleImage = {
         async getImages(store) {
             let images = await getAllImage();
             store.commit("setImages", images)
+        },
+        async uploadImages(store, file) {
+            let image = new FormData();
+            image.set("image", file);
+            let res = await uploadImage(image);
+            store.commit("addImages", res);
         }
     }
 };

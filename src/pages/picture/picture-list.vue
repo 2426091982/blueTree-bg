@@ -1,54 +1,18 @@
 <script setup>
 import { UploadOutlined, CheckCircleFilled, DeleteFilled } from "@ant-design/icons-vue";
-import { message } from "ant-design-vue";
-import { ref, computed, effect } from "vue";
+import { ref } from "vue";
 import { useStore } from "vuex";
 
-import Select from "@/components/select";
+import Select from "./select";
 import { preventDefault } from "@/utils";
-import { uploadImage, deleteImage } from "@/api";
+import { deleteImage } from "@/api";
 import { mapState } from "@/store";
+import Upload from "./upload.vue";
 
 const size = 20;
 const store = useStore();
 
-let input = document.createElement("input");
-input.type = "file";
-input.accept = "image/*";
-// input.multiple = true;
-
-// 上传图片
-const files = ref(null);
-const imgUrl = ref("");
-const selectingFile = () => {
-    input.click();
-};
-const selectedFile = (e) => {
-    preventDefault(e);
-    const file = (e.dataTransfer || e.target).files[0];
-    files.value = file;
-    if (imgUrl.value) {
-        URL.revokeObjectURL(imgUrl.value);
-    }
-    imgUrl.value = URL.createObjectURL(file);
-    input.value = "";
-};
-input.addEventListener("change", selectedFile);
-
-// 上传图片模态框 
 const visible = ref(false);
-const closeModal = () => {
-    visible.value = false;
-};
-const ok = async () => {
-    if (files.value) {
-        let image = new FormData()
-        image.set("image", files.value);
-        let newImage = await uploadImage(image);
-        store.commit("image/addImages", newImage);
-    }
-    closeModal()
-}
 
 // Select 组件
 const {
@@ -64,13 +28,9 @@ const selectImg = (data) => {
     selectedDatas.value.push(data);
 };
 const imageTorecycle = async (id) => {
-    let res = await deleteImage(id);
-    message.success("移至回收站成功")
+    // let res = await deleteImage(id);
+    // message.success("移至回收站成功")
 }
-
-effect(() => {
-    console.log(imgs);
-})
 
 </script>
 
@@ -78,7 +38,7 @@ effect(() => {
     <div class="picture-list">
         <a-space direction="vertical" :size="size" key="1">
             <a-space style="width: 100%" :size="size">
-                <a-button type="primary" @click="visible = true">上传图片</a-button>
+                <Upload v-model:visible="visible"></Upload>
                 <a-button danger @click="isSelect = !isSelect" type="primary">
                     {{ isSelect ? "取消批量删除" : "批量删除"}}
                 </a-button>
@@ -137,25 +97,3 @@ effect(() => {
         </a-modal>
     </div>
 </template>
-
-<style lang="less" scoped>
-.upload-box {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px dashed #999;
-  min-height: 200px;
-  cursor: pointer;
-  transition: border 0.3s, color 0.3s;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-
-  &:hover {
-    border-color: lightskyblue;
-    color: lightskyblue;
-  }
-}
-</style>

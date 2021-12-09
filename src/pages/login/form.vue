@@ -76,13 +76,13 @@ const verlidatorSuccess = () => (success.value = true);
         ref="password"
         label="密&nbsp;&nbsp;&nbsp;&nbsp;码"
         name="password"
-        cc-number
         validateFirst
       >
         <a-input
           v-model:value="formState.password"
           type="password"
           placeholder="请输入您的密码"
+          autocomplete="autofill anchor mantle"
         />
       </a-form-item>
       <a-form-item label="人机校验" :wrapper-col="{ span: 16, offset: 0 }">

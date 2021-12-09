@@ -1,14 +1,9 @@
 import axios from "@/utils/axios";
 
 export const getAllImage = () => {
-    return axios.get("/images");
-}
-
-export const uploadImage = (data) => {
-    console.log(data);
-    return axios.post("/images", data)
+  return axios.get("/images");
 };
-
-export const deleteImage = (id) => {
-    // return axios.delete(`/images/${id}`);
-}
+// 上传图片
+export const uploadImage = (image) => {
+  return axios.post("/images", image);
+};

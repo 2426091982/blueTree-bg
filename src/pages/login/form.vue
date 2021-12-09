@@ -83,6 +83,7 @@ const verlidatorSuccess = () => (success.value = true);
           v-model:value="formState.password"
           type="password"
           placeholder="请输入您的密码"
+          autocomplete
         />
       </a-form-item>
       <a-form-item label="人机校验" :wrapper-col="{ span: 16, offset: 0 }">

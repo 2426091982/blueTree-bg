@@ -11,6 +11,7 @@
     "@antv/g2": "^4.1.34",
     "ant-design-vue": "^3.0.0-alpha.12",
     "axios": "^0.24.0",
+    "dayjs": "^1.10.7",
     "loadsh": "^0.0.4",
     "mavon-editor": "^2.10.0",
     "md-editor-v3": "^1.7.2",

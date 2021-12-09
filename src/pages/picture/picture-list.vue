@@ -5,7 +5,6 @@ import { useStore } from "vuex";
 
 import Select from "./select";
 import { preventDefault } from "@/utils";
-import { deleteImage } from "@/api";
 import { mapState } from "@/store";
 import Upload from "./upload.vue";
 
@@ -79,21 +78,8 @@ const imageTorecycle = async (id) => {
                 />
             </template>
         </Select>
-        
-        <a-modal :visible="visible" @cancel="closeModal" @ok="ok" key="3">
-            <template #title> 新增图片 </template>
-            <div
-                class="upload-box"
-                @click="selectingFile"
-                @dragover="preventDefault"
-                @drop="selectedFile"
-            >
-                <img :src="imgUrl" alt="" v-if="imgUrl" style="width: 100%" />
-                <template v-else>
-                    <UploadOutlined style="font-size: 24px; margin-bottom: 10px" />
-                    点击或拖拽图片至此, 可以上传图片
-                </template>
-            </div>
-        </a-modal>
     </div>
 </template>
+
+
+

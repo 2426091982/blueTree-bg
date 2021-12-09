@@ -16,7 +16,6 @@ const props = defineProps({
 let input = document.createElement("input");
 input.type = "file";
 // input.multiple = true;
-console.log(props.visible);
 // 上传图片
 const files = ref(null);
 const imgUrl = ref("");
@@ -37,7 +36,20 @@ const selectedFile = (e) => {
 input.addEventListener("change", selectedFile);
 
 // 上传图片模态框 
-const emit = defineEmits(["update:visible", "cancel", "ok", "change"]);
+// const emit = defineEmits(["update:visible", "cancel", "ok", "change"]);
+const emit = defineEmits({
+    "update:visible": null,
+    cancel() {
+        console.log(arguments);
+    },
+    ok() {
+        console.log(arguments);
+
+    },
+    change() {
+        console.log(arguments);
+    }
+})
 
 const cancel = () => {
     emit("update:visible", false);

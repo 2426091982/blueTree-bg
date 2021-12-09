@@ -1,13 +1,11 @@
 <template>
-  <div class="switchRoute">
-    <slot>
-      <router-view v-slot="{ Component, route }">
-        <transition name="switchRoute" mode="out-in" >
-          <component :is="Component" :key="route.path" />
-        </transition>
-      </router-view>
-    </slot>
-  </div>
+    <div class="switchRoute">
+        <router-view v-slot="{ Component, route }">
+            <transition name="switchRoute" mode="out-in" >
+                <component :is="Component" :key="route.path" />
+            </transition>
+        </router-view>
+    </div>
 </template>
 
 <style lang="less">

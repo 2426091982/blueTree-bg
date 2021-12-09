@@ -1,5 +1,5 @@
 <script setup>
-import { getAllImage } from '@/api';
+// import { getAllImage } from '@/api';
 // import switchRoute from '@/components/switchRoute.vue';
 
 </script>

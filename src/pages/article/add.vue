@@ -197,7 +197,6 @@ const addNewArticle = (e) => {
       <MdEditorV3
         v-model="formState.content"
         @onHtmlChanged="saveHtml"
-        @onUploadImg="onUploadImg"
       />
     </a-form-item>
     <a-form-item :wrapper-col="{ offset: labelCol.span }">

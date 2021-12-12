@@ -1,6 +1,6 @@
-import store from "@/store";
-import router from "@/router";
 import { message } from "ant-design-vue";
+import router from "@/router";
+import store from "@/store";
 
 export const preventDefault = (e) => {
     if (typeof e.preventDefault === 'function') {
@@ -54,33 +54,3 @@ export const Tahoe = async (multiple, maxIndex, time, cb) => {
         };
     }
 };
-
-// let arr = new Array(100).fill(null);
-// let startTime = Date.now();
-// for(let i = 0; i < arr.length; i++) {};
-
-// async function sleep() {
-//     return new Promise((resolve) => {
-//         let timeout = parseInt(Math.random() * 500);
-//         setTimeout(() => {
-//             resolve();
-//         }, timeout)
-//     });
-// }
-// const demo1 = async () => {
-//     let startTime = Date.now();
-//     for(let i = 0; i < arr.length; i++) {
-//         await sleep();
-//     };
-//     console.log("end " + (Date.now() - startTime));
-// };
-// demo1();
-
-// Tahoe(2, arr.length, 500, async (num, requested) => {
-//     let data = arr.slice(requested, requested + num);
-//     // for(let i = 0; i < data.length; i++) {};
-//     await sleep();
-//     console.log(requested);
-// }).then(res => {
-//     console.log("end " + (Date.now() - startTime));
-// });

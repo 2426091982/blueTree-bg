@@ -31,9 +31,6 @@ let {
 function getImages() {
     store.dispatch("image/getImages");
 };
-if (images.value.length === 0) {
-    getImages();
-}
 
 const visible = ref(false);
 const select = (data) => {
@@ -44,6 +41,10 @@ const select = (data) => {
 const changeVisible = (flag = false) => {
     if (flag instanceof Event) {
         flag = false;
+    };
+    console.log(images.value);
+    if (flag && images.value.length === 0) {
+        getImages();
     };
     visible.value = flag;
 }
@@ -65,7 +66,7 @@ const visibleUpload = ref(false);
     }">
         <a-space direction="vertical">
             <a-space>
-                <a-button @click.stop="visible = true">选择其他图片</a-button>
+                <a-button @click.stop="changeVisible(true)">选择其他图片</a-button>
                 <Upload v-model:visible="visibleUpload"></Upload>
             </a-space>
             <a-image :src="src" :width="imgWidth"></a-image>
@@ -93,7 +94,7 @@ const visibleUpload = ref(false);
     position: relative;
 }
 .select-dropdown-container {
-    max-height: 400px;
+    max-height: 200px;
     position: absolute;
     left: 0;
     z-index: 10;

@@ -1,27 +1,25 @@
 import axios from "axios";
-import store from "@/store";
 import { logout } from ".";
-import { message } from "ant-design-vue";
+import store from '@/store'
 
 axios.defaults.baseURL = "http://1.117.92.6:1330";
 axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use((config) => {
-    let token = store.state.token;
-    if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
+  let token = store.state.token;
+  config.headers.Authorization = `Bearer ${token}`;
+  return config;
 });
 
-axios.interceptors.response.use((res) => {
+axios.interceptors.response.use(
+  (res) => {
     return res.data;
-}, (err) => {
-    console.dir(err);
-    if (err.response.status === 401) {
-        message.success("秘钥过期, 重新登录")
-        logout();
-    };
-});
+  },
+  (err) => {
+    if (err.response.status === 401) { // 没有权限，直接退出登录页
+      logout(true);
+    }
+  }
+);
 
 export default axios;

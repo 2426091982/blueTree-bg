@@ -1,4 +1,3 @@
-import { computed } from "vue";
 import { createStore } from 'vuex';
 import modules from './modules';
 
@@ -6,8 +5,8 @@ export const storeOptions = {
     state() {
         let token =  window.localStorage.getItem('token') || "";
         return {
-            token
-        }
+            token,
+        };
     },
     mutations: {
         updateToken(state, token) {

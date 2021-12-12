@@ -17,6 +17,7 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use((res) => {
     return res.data;
 }, (err) => {
+    console.dir(err);
     if (err.response.status === 401) {
         message.success("秘钥过期, 重新登录")
         logout();

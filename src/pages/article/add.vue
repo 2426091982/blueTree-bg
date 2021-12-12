@@ -142,6 +142,7 @@ const addNewArticle = (e) => {
     :label-col="labelCol"
     :wrapper-col="wrapperCol"
     @finish="addNewArticle"
+    class="contentBox"
   >
     <a-form-item name="title" label="文章标题">
       <a-input v-model:value="formState.title" placeholder="文章标题"></a-input>
@@ -153,9 +154,9 @@ const addNewArticle = (e) => {
         v-model:value="formState.classification"
         placeholder="请选择文章分类"
       >
-        <a-select-option v-for="item in classificationList" :value="item.id">{{
-          item.name
-        }}</a-select-option>
+        <a-select-option v-for="item in classificationList" :value="item.id" :key="item.id">
+            {{ item.name }}
+        </a-select-option>
       </a-select>
     </a-form-item>
 
@@ -193,11 +194,10 @@ const addNewArticle = (e) => {
       <a-switch v-model:checked="formState.visibility" />
     </a-form-item>
 
-    <a-form-item :wrapper-col="{ span: 24 }">
+    <a-form-item :wrapper-col="{ span: 22, offset: 1 }">
       <MdEditorV3
         v-model="formState.content"
         @onHtmlChanged="saveHtml"
-        @onUploadImg="onUploadImg"
       />
     </a-form-item>
     <a-form-item :wrapper-col="{ offset: labelCol.span }">
@@ -207,7 +207,10 @@ const addNewArticle = (e) => {
 </template>
 
 <style lang="less" scoped>
-/deep/ .ant-form-item-control {
+:deep(.ant-form-item-control) {
   margin-bottom: 10px;
+}
+.contentBox {
+    padding-top: 20px;
 }
 </style>

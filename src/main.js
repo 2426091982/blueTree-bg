@@ -7,6 +7,7 @@ import "ant-design-vue/dist/antd.css";
 // md 编辑器
 import MdEditorV3 from "md-editor-v3";
 import "md-editor-v3/lib/style.css";
+import directives from "./directive";
 message.config({
   // 配置全局提示信息
   duration: 2,
@@ -19,6 +20,7 @@ app.use(store);
 app.use(MdEditorV3);
 
 app.mount("#app");
+app.use(directives);
 
 router.beforeEach((to, from, next) => {
   let isLogin = store.state.token; // 通过token判断是否登录

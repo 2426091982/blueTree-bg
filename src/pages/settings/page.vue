@@ -17,7 +17,7 @@ const model = reactive({
     icp_license: "",   // IPC备案信息   
     public_ecurity_license: "",    // 公安备案信息
 });
-
+ 
 watch(
     () => pageConf.value,
     () => {
@@ -28,6 +28,7 @@ watch(
     },
     {
         immediate: true,
+        deep: true,
     }
 )
 
@@ -73,7 +74,14 @@ const handleChange = (value) => {
 </script>
 
 <template>
-    <a-form :model="model" :rules="formRules" :label-col="labelCol" :wrapper-col="wrapperCol" @submit="submit">
+    <a-form
+        :model="model"
+        :rules="formRules"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+        @submit="submit"
+        class="contentBox"
+    >
         <a-form-item name="title" label="网站标题">
             <a-input v-model:value="model.title" placeholder="网站标题"></a-input>
         </a-form-item>
@@ -125,5 +133,9 @@ const handleChange = (value) => {
 <style lang="less" scoped>
 :deep(.ant-form-item-control) {
     margin-bottom: 10px;
+}
+
+.contentBox {
+    padding-top: 20px;
 }
 </style>

@@ -151,7 +151,7 @@ document.body.addEventListener("click", closeContextMenuVisible);
 </script>
 
 <template>
-    <div class="settings-banner">
+    <div class="settings-banner contentBox">
         <a-space style="margin-bottom: 10px;">
             <a-button @click="visible = true">新增轮播图</a-button>
             <a-button type="primary" @click="patchCarousel">保存</a-button>

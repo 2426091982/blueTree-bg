@@ -17,6 +17,7 @@ let collapsed = ref(false);
     <a-layout id="components-layout-demo-side" style="height: 100%"
     v-if="$route.path !== '/login'">
         <a-layout-sider v-model="collapsed" collapsible>
+            <div class="logo">蓝树林官网后台</div>
             <NavBar />
         </a-layout-sider>
         <a-layout>
@@ -56,7 +57,6 @@ let collapsed = ref(false);
 
 #components-layout-demo-side .logo {
   height: 32px;
-  background: rgba(255, 255, 255, .2);
   margin: 16px;
 }
 .logo {
@@ -65,9 +65,9 @@ let collapsed = ref(false);
   color: #fff;
 }
 
-body {
-  background-color: #00000060;
-}
+// body {
+//   background-color: #00000060;
+// }
 
 #app {
   // overflow: hidden;
@@ -85,12 +85,17 @@ body {
   border-radius: 6px;
 }
 .container > .switchRoute {
-    padding: 24px;
-    background: #fff;
-    min-height: 360px;
     flex: 1;
-    overflow-y: scroll;
     opacity: 1;
+    overflow: hidden;
+}
+
+.contentBox {
+    overflow-y: scroll;
+    padding: 24px;
+    height: 100%;
+    min-height: 360px;
+    background: #fff;
 }
 
 .login-container {

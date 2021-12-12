@@ -131,102 +131,104 @@ const handleReset = (clearFilters) => {
 };
 </script>
 <template>
-  <div style="margin-bottom: 16px">
-    <a-space :size="10">
-      <a-button type="primary" @click="showModal"> 新增 </a-button>
-      <a-button
-        type="danger"
-        :disabled="!hasSelected"
-        :loading="loading"
-        @click="removeCategory"
-      >
-        删除
-      </a-button>
-    </a-space>
-    <span style="margin-left: 8px">
-      <template v-if="hasSelected">
-        {{ `已经选择 ${selectedRowKeys.length} 项` }}
-      </template>
-    </span>
-  </div>
-  <a-table
-    :data-source="data"
-    :columns="columns"
-    :row-selection="{
-      selectedRowKeys: selectedRowKeys,
-      onChange: onSelectChange,
-    }"
-  >
-    <template #headerCell="{ column }">
-      <template v-if="column.key === 'title'">
-        <span style="color: #1890ff">文章标题</span>
-      </template>
-    </template>
-    <template
-      #customFilterDropdown="{
-        setSelectedKeys,
-        selectedKeys,
-        confirm,
-        clearFilters,
-        column,
-      }"
-    >
-      <div style="padding: 8px">
-        <a-input
-          ref="searchInput"
-          :placeholder="`搜索 ${column.title}`"
-          :value="selectedKeys[0]"
-          style="width: 188px; margin-bottom: 8px; display: block"
-          @change="
-            (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
-          "
-          @pressEnter="handleSearch(selectedKeys, confirm, column.dataIndex)"
-        />
+  <div class="contentBox">
+    <div style="margin-bottom: 16px">
+      <a-space :size="10">
+        <a-button type="primary" @click="showModal"> 新增 </a-button>
         <a-button
-          type="primary"
-          style="width: 90px; margin-right: 8px"
-          @click="handleSearch(selectedKeys, confirm, column.dataIndex)"
+          danger 
+          :disabled="!hasSelected"
+          :loading="loading"
+          @click="removeCategory"
         >
-          <template #icon><SearchOutlined /></template>
-          查找
+          删除
         </a-button>
-        <a-button style="width: 90px" @click="handleReset(clearFilters)"
-          >重置
-        </a-button>
-      </div>
-    </template>
-    <template #customFilterIcon="{ filtered }">
-      <search-outlined :style="{ color: filtered ? '#108ee9' : undefined }" />
-    </template>
-    <template #bodyCell="{ text, column, record }">
-      <span v-if="searchText && searchedColumn === column.dataIndex">
-        <template
-          v-for="(fragment, i) in text
-            .toString()
-            .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
-        >
-          <mark
-            v-if="fragment.toLowerCase() === searchText.toLowerCase()"
-            :key="i"
-            class="highlight"
-          >
-            {{ fragment }}
-          </mark>
-          <template v-else>{{ fragment }}</template>
+      </a-space>
+      <span style="margin-left: 8px">
+        <template v-if="hasSelected">
+          {{ `已经选择 ${selectedRowKeys.length} 项` }}
         </template>
       </span>
-
-      <template v-if="column.key === 'classificationId'">
-        <div>
-          <a-tag color="pink">{{ record.name }}</a-tag>
+    </div>
+    <a-table
+      :data-source="data"
+      :columns="columns"
+      :row-selection="{
+        selectedRowKeys: selectedRowKeys,
+        onChange: onSelectChange,
+      }"
+    >
+      <template #headerCell="{ column }">
+        <template v-if="column.key === 'title'">
+          <span style="color: #1890ff">文章标题</span>
+        </template>
+      </template>
+      <template
+        #customFilterDropdown="{
+          setSelectedKeys,
+          selectedKeys,
+          confirm,
+          clearFilters,
+          column,
+        }"
+      >
+        <div style="padding: 8px">
+          <a-input
+            ref="searchInput"
+            :placeholder="`搜索 ${column.title}`"
+            :value="selectedKeys[0]"
+            style="width: 188px; margin-bottom: 8px; display: block"
+            @change="
+              (e) => setSelectedKeys(e.target.value ? [e.target.value] : [])
+            "
+            @pressEnter="handleSearch(selectedKeys, confirm, column.dataIndex)"
+          />
+          <a-button
+            type="primary"
+            style="width: 90px; margin-right: 8px"
+            @click="handleSearch(selectedKeys, confirm, column.dataIndex)"
+          >
+            <template #icon><SearchOutlined /></template>
+            查找
+          </a-button>
+          <a-button style="width: 90px" @click="handleReset(clearFilters)"
+            >重置
+          </a-button>
         </div>
       </template>
-      <template v-if="column.key === 'operation'">
-        <a @click="showModal(record)">修改分类名称</a>
-      </template> </template
-    >+
-  </a-table>
-  <a-modal v-model:visible="visible" title="设置分类名称" @ok="handleOk">
-    <a-input v-model:value="inputValue"></a-input>
-  </a-modal>
+      <template #customFilterIcon="{ filtered }">
+        <search-outlined :style="{ color: filtered ? '#108ee9' : undefined }" />
+      </template>
+      <template #bodyCell="{ text, column, record }">
+        <span v-if="searchText && searchedColumn === column.dataIndex">
+          <template
+            v-for="(fragment, i) in text
+              .toString()
+              .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))"
+          >
+            <mark
+              v-if="fragment.toLowerCase() === searchText.toLowerCase()"
+              :key="i"
+              class="highlight"
+            >
+              {{ fragment }}
+            </mark>
+            <template v-else>{{ fragment }}</template>
+          </template>
+        </span>
+
+        <template v-if="column.key === 'classificationId'">
+          <div>
+            <a-tag color="pink">{{ record.name }}</a-tag>
+          </div>
+        </template>
+        <template v-if="column.key === 'operation'">
+          <a @click="showModal(record)">修改分类名称</a>
+        </template> </template
+      >+
+    </a-table>
+    <a-modal v-model:visible="visible" title="设置分类名称" @ok="handleOk">
+      <a-input v-model:value="inputValue"></a-input>
+    </a-modal>
+  </div>
 </template>

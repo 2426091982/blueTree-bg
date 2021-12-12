@@ -18,31 +18,36 @@ defineProps({
             900: 1,
             all: null,
         })
+    },
+    isRender: {
+        type: Function,
+        default: () => true,
     }
 });
-const emit = defineEmits(["select"])
+// const emit = defineEmits(["select"])
 </script>
 
 <template>
-    <div class="select-container">
-        <div class="select-item" v-for="(item, index) in data" :key="renderKey(item, index)">
-            <slot :data="item"></slot>
-            <transition name="select-operation">
-                <div class="select-operation isSelect" v-show="isSelect" @click="emit('select', item)">
-                    <slot name="select-operation" :data="item"></slot>
+    <div class="select-container" @scroll="scroll">
+        <template v-for="(item, index) in data" :key="renderKey(item, index)">
+            <div class="select-item" v-if="isRender(item, index)">
+                <slot :data="item" :index="index"></slot>
+                <transition name="select-operation">
+                    <div class="select-operation isSelect" v-show="isSelect">
+                        <slot name="select-operation" :data="item" :index="index"></slot>
+                    </div>
+                </transition>
+                <div class="select-operation" v-show="!isSelect">
+                    <slot name="operation" :data="item" :index="index"></slot>
                 </div>
-            </transition>
-            <div class="select-operation" v-show="!isSelect">
-                <slot name="operation" :data="item"></slot>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 
 <style lang="less">
 .select-container {
     column-count: v-bind('column.all || column.default');
-    // break-inside: avoid-page;
     padding: 6px 0;
 }
 

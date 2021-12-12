@@ -31,8 +31,13 @@ watch(
 </script>
 
 <template>
-    <div class="logo">蓝树林官网后台</div>
-    <a-menu theme="dark" mode="inline" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" class="navs">
+    <a-menu
+        theme="dark"
+        mode="inline"
+        v-model:openKeys="openKeys"
+        v-model:selectedKeys="selectedKeys"
+        class="navs"
+    >
         <template v-for="item in $router.options.routes">
             <template v-if="item.children && !item.meta.noRender">
                 <a-sub-menu :key="item.path">

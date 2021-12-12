@@ -2,19 +2,31 @@
 import { ref } from "vue";
 import { message } from "ant-design-vue";
 import { DeleteFilled, ReloadOutlined, CheckCircleFilled } from "@ant-design/icons-vue"
+
 import Select from "./select";
+import store, { mapState } from "@/store";
 
 const size = 20;
 
-const imgs = [
-  "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg",
-  "https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg",
-  "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg",
-  "https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg",
-  "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg",
-  "https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg",
-  "https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg",
-];
+const {
+    recycleImages: imgs,
+    images,
+} = mapState("image", ["recycleImages", "images"]);
+
+const isRequesting = ref(false);
+const getRecycleImages = async () => {
+    isRequesting.value = true;
+
+    let images = await store.dispatch("image/getRecycleImages");
+    if (images.length === 0) {
+        message.success("数据到底了~~");
+    }
+    isRequesting.value = false;
+};
+if (imgs.value.length === 0) {
+    getRecycleImages()
+}
+
 const isSelect = ref(false);
 const selectedDatas = ref([]);
 const selectItem = ref(null);
@@ -34,26 +46,40 @@ const deleteImgs = () => {
     visible.value = false;
     isSelect.value = false;
     isDelete.value = false;
-    isRecycle.value = false;
+    isRecovery.value = false;
 };
 
-const isRecycle = ref(false);
-const triggerRecycle = () => {
+const isRecovery = ref(false);
+const recoveryImg = (data) => {
+    
+}
+// 开启批量恢复
+const triggerRecovery = async () => {
     isDelete.value = false;
-    isRecycle.value = isSelect.value = !isRecycle.value;
+    isRecovery.value = isSelect.value = !isRecovery.value;
     // selectedDatas.value = [];
+}
+// 恢复选中的图片
+const recoveryImages = async (datas) => {
+    if (datas && !Array.isArray(datas)) {
+        console.error("恢复图片, 参数只能是数组, 但是", datas);
+        datas = null;
+        return;
+    };
+    await store.dispatch("image/recoveryImages", datas);
+    message.success("图片恢复成功");
 }
 
 const isDelete = ref(false);
 const triggerDelete = () => {
-    isRecycle.value = false;
+    isRecovery.value = false;
     isDelete.value = isSelect.value = !isDelete.value;
     // selectedDatas.value = [];
 }
 
 const visible = ref(false);
 const closeDialog = () => {
-    selectItem.value = null;
+    // selectItem.value = null;
     visible.value = false;
 };
 const openDialog = () => {
@@ -62,14 +88,19 @@ const openDialog = () => {
 </script>
 
 <template>
-    <div class="picture-recycle">
+    <div class="picture-recycle contentBox">
         <a-space direction="vertical" :size="size">
             <a-space style="width: 100%" :size="size">
                 <div class="recycle-ops">
-                    <a-button @click="triggerRecycle" type="primary">
-                        {{ isRecycle ? "取消批量恢复" : "批量恢复"}}
+                    <a-button @click="triggerRecovery" type="primary">
+                        {{ isRecovery ? "取消批量恢复" : "批量恢复"}}
                     </a-button>
-                    <a-button v-show="isRecycle" type="primary" style="margin-left: 20px;">
+                    <a-button
+                        v-show="isRecovery"
+                        type="primary"
+                        style="margin-left: 20px;"
+                        @click="recoveryImages(selectedDatas)"
+                    >
                         恢复
                     </a-button>
                 </div>
@@ -89,20 +120,28 @@ const openDialog = () => {
                 </div>
             </a-space>
             <a-space style="width: 100%" :size="size">
-                <a-input placeholder="文件名称模糊搜索" style="width: 300px"></a-input>
+                <!-- <a-input placeholder="文件名称模糊搜索" style="width: 300px"></a-input> -->
                 <a-range-picker></a-range-picker>
             </a-space>
         </a-space>
 
-        <Select :data="imgs" :is-select="isSelect" style="margin-top: 20px;" class="picture" @select="selectImg">
+        <Select
+            :data="imgs"
+            :is-select="isSelect"
+            :is-render="(item) => !images.includes(item)"
+            style="margin-top: 20px;"
+            class="picture"
+            @select="selectImg"
+        >
             <template #default="{ data }">
-                <a-image :src="data" />
+                <a-image :src="data.url" />
             </template>
 
             <template #select-operation="{ data }">
                 <CheckCircleFilled
                     style="font-size: 30px;"
                     :class="{ active: selectedDatas.includes(data) }"
+                    @click="selectImg(data)"
                 />
             </template>
 
@@ -110,6 +149,7 @@ const openDialog = () => {
                 <ReloadOutlined
                     style="font-size: 30px;"
                     title="恢复"
+                    @click="recoveryImages([data])"
                 />
                 <DeleteFilled
                     style="font-size: 30px;"
@@ -119,9 +159,20 @@ const openDialog = () => {
             </template>
         </Select>
 
+        <a-button type="primary" :loading="isRequesting" @click="getRecycleImages" class="loadmore">
+            点击加载更多
+        </a-button>
+
         <a-modal :visible="visible" title="删除图片" @cancel="closeDialog" @ok="deleteImgs">
-            <a-image v-if="selectItem" :src="selectItem" />
+            <a-image v-if="selectItem" :src="selectItem.url" />
             <span v-show="!selectItem">确定删除所有选中图片吗?</span>
         </a-modal>
     </div>
 </template>
+
+<style lang="less" scoped>
+.loadmore {
+    display: block;
+    margin: 10px auto;
+}
+</style>

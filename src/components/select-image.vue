@@ -28,7 +28,12 @@ const emit = defineEmits(["update:src", "click"]);
 let {
     images
 } = mapState("image", ["images"]);
-store.dispatch("image/getImages");
+function getImages() {
+    store.dispatch("image/getImages");
+};
+if (images.value.length === 0) {
+    getImages();
+}
 
 const visible = ref(false);
 const select = (data) => {
@@ -52,7 +57,12 @@ const visibleUpload = ref(false);
 </script>
 
 <template>
-    <div class="select-image">
+    <div class="select-image" v-scroll="{
+        end: {
+            offset: 40,
+            handle: getImages,
+        }
+    }">
         <a-space direction="vertical">
             <a-space>
                 <a-button @click.stop="visible = true">选择其他图片</a-button>

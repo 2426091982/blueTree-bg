@@ -11,7 +11,7 @@ const gutter = [20, 20];
 </script>
 
 <template>
-    <a-space class="home" direction="vertical" :size="20">
+    <a-space class="home contentBox" direction="vertical" :size="20">
         <a-row :gutter="gutter">
             <a-col :span="8">
                 <a-card hoverable>

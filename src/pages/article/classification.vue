@@ -99,8 +99,8 @@ const onSelectChange = (selectedRowKeys) => {
 const columns = [
   {
     title: "文章分类",
-    dataIndex: "classificationId",
-    key: "classificationId",
+    dataIndex: "classificationName",
+    key: "classificationName",
     customFilterDropdown: true,
     onFilter: (value, record) =>
       record.name.toString().toLowerCase().includes(value.toLowerCase()),
@@ -111,6 +111,11 @@ const columns = [
         }, 100);
       }
     },
+  },
+  {
+    title: "分类Id",
+    dataIndex: "classificationId",
+    key: "classificationId",
   },
   {
     title: "操作",
@@ -217,9 +222,14 @@ const handleReset = (clearFilters) => {
           </template>
         </span>
 
-        <template v-if="column.key === 'classificationId'">
+        <template v-if="column.key === 'classificationName'">
           <div>
             <a-tag color="pink">{{ record.name }}</a-tag>
+          </div>
+        </template>
+        <template v-if="column.key === 'classificationId'">
+          <div>
+            <a-tag color="green">{{ record.id }}</a-tag>
           </div>
         </template>
         <template v-if="column.key === 'operation'">

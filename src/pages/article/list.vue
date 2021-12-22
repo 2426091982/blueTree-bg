@@ -6,56 +6,56 @@ import { message } from "ant-design-vue";
 
 // 导入api
 import {
-    getArticleList,
-    removeArticle,
-    getArticleCategory,
+  getArticleList,
+  removeArticle,
+  getArticleCategory,
 } from "@/api/article";
 const router = useRouter();
 // 数据
 let dataList = ref([
-    // {
-    //   id: "1",
-    //   title: "红树林入职到挨叼",
-    //   cover: "http://dummyimage.com/234x60",
-    //   date: "2020-03-17",
-    //   description: "职校、职高、技校、中专、大专的解读及区别",
-    //   nominate: true,
-    //   category: "news-company"
-    // },
+  // {
+  //   id: "1",
+  //   title: "红树林入职到挨叼",
+  //   cover: "http://dummyimage.com/234x60",
+  //   date: "2020-03-17",
+  //   description: "职校、职高、技校、中专、大专的解读及区别",
+  //   nominate: true,
+  //   category: "news-company"
+  // },
 ]);
 const articleCategoryList = ref();
 // 初始化
 const init = () => {
-    // 读取文章分类列表
-    getArticleCategory().then((res) => {
-        articleCategoryList.value = res;
-        console.log(articleCategoryList.value);
-        // 获取文章列表
-        getArticleList().then((res) => {
-            console.log(res);
-            dataList.value = res;
-            dataList.value.map((item) => {
-                item.key = item.id;
-                // 遍历分类数组
-                articleCategoryList.value.forEach((item2) => {
-                    if (item.category == item2.id) {
-                        item.categoryName = item2.name;
-                    }
-                });
-            });
-            console.log(dataList.value);
+  // 读取文章分类列表
+  getArticleCategory().then((res) => {
+    articleCategoryList.value = res;
+    console.log(articleCategoryList.value);
+    // 获取文章列表
+    getArticleList().then((res) => {
+      console.log(res);
+      dataList.value = res;
+      dataList.value.map((item) => {
+        item.key = item.id;
+        // 遍历分类数组
+        articleCategoryList.value.forEach((item2) => {
+          if (item.category == item2.id) {
+            item.categoryName = item2.name;
+          }
         });
+      });
+      console.log(dataList.value);
     });
+  });
 };
 init();
 
 // 保存的状态
 const state = reactive({
-    searchText: "",
-    searchedColumn: "",
-    selectedRowKeys: [],
-    // Check here to configure the default column
-    loading: false,
+  searchText: "",
+  searchedColumn: "",
+  selectedRowKeys: [],
+  // Check here to configure the default column
+  loading: false,
 });
 // 结构暴露
 const { searchText, searchedColumn, selectedRowKeys, loading } = toRefs(state);
@@ -65,91 +65,91 @@ const hasSelected = computed(() => state.selectedRowKeys.length > 0);
 
 // 取消全选
 const remove = () => {
-    state.loading = true; // ajax request after empty completing
+  state.loading = true; // ajax request after empty completing
 
-    console.log(state.selectedRowKeys);
-    state.selectedRowKeys.forEach((item) => {
-        removeArticle(item).then((res) => {
-            console.log(res);
-            state.loading = false;
-            message.success("删除文章成功!");
-            init();
-        });
+  console.log(state.selectedRowKeys);
+  state.selectedRowKeys.forEach((item) => {
+    removeArticle(item).then((res) => {
+      console.log(res);
+      state.loading = false;
+      message.success("删除文章成功!");
+      init();
     });
+  });
 };
 
 const onSelectChange = (Keys) => {
-    console.log("selectedRowKeys changed: ", Keys);
-    selectedRowKeys.value = Keys;
-    console.log(selectedRowKeys.value);
+  console.log("selectedRowKeys changed: ", Keys);
+  selectedRowKeys.value = Keys;
+  console.log(selectedRowKeys.value);
 };
 
 const Edit = (id) => {
-    router.push(`/article/add?id=${id}`);
+  router.push(`/article/add?id=${id}`);
 };
 
 const columns = [
-    {
-        title: "文章标题",
-        dataIndex: "title",
-        key: "title",
-        customFilterDropdown: true,
-        onFilter: (value, record) =>
-            record.name.toString().toLowerCase().includes(value.toLowerCase()),
-        onFilterDropdownVisibleChange: (visible) => {
-            if (visible) {
-                setTimeout(() => {
-                    searchInput.value.focus();
-                }, 100);
-            }
-        },
+  {
+    title: "文章标题",
+    dataIndex: "title",
+    key: "title",
+    customFilterDropdown: true,
+    onFilter: (value, record) =>
+      record.name.toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => {
+          searchInput.value.focus();
+        }, 100);
+      }
     },
-    {
-        title: "文章分类",
-        dataIndex: "category",
-        key: "category",
+  },
+  {
+    title: "文章分类",
+    dataIndex: "category",
+    key: "category",
+  },
+  {
+    title: "是否推荐",
+    dataIndex: "nominate",
+    key: "nominate",
+  },
+  {
+    title: "是否可见",
+    dataIndex: "visibility",
+    key: "visibility",
+  },
+  {
+    title: "更新日期",
+    dataIndex: "date",
+    key: "date",
+    customFilterDropdown: true,
+    onFilter: (value, record) =>
+      record.address.toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => {
+          searchInput.value.focus();
+        }, 100);
+      }
     },
-    {
-        title: "是否推荐",
-        dataIndex: "nominate",
-        key: "nominate",
-    },
-    {
-        title: "是否可见",
-        dataIndex: "visibility",
-        key: "visibility",
-    },
-    {
-        title: "更新日期",
-        dataIndex: "date",
-        key: "date",
-        customFilterDropdown: true,
-        onFilter: (value, record) =>
-            record.address.toString().toLowerCase().includes(value.toLowerCase()),
-        onFilterDropdownVisibleChange: (visible) => {
-            if (visible) {
-                setTimeout(() => {
-                    searchInput.value.focus();
-                }, 100);
-            }
-        },
-    },
-    {
-        title: "操作",
-        dataIndex: "operation",
-        key: "operation",
-    },
+  },
+  {
+    title: "操作",
+    dataIndex: "operation",
+    key: "operation",
+  },
 ];
 
 const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    confirm();
-    state.searchText = selectedKeys[0];
-    state.searchedColumn = dataIndex;
+  confirm();
+  state.searchText = selectedKeys[0];
+  state.searchedColumn = dataIndex;
 };
 
 const handleReset = (clearFilters) => {
-    clearFilters();
-    state.searchText = "";
+  clearFilters();
+  state.searchText = "";
 };
 </script>
 <template>
@@ -270,6 +270,6 @@ const handleReset = (clearFilters) => {
 
 <style lang="less" scoped>
 .contentBox {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 </style>

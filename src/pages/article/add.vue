@@ -73,11 +73,19 @@ const uploadIcon = (file, list) => {
   let form = new FormData();
   form.set("image", file);
   uploadImage(form).then((res) => {
-  
     formState.value.icon = res.url;
   });
 
   return false;
+};
+const onUploadImg = (files, callback) => {
+  let form = new FormData();
+  form.set("image", files[0]);
+  // 上传图片返回链接
+  uploadImage(form).then((res) => {
+    // console.log(res);
+    callback([res.url]);
+  });
 };
 
 // 保存html格式
@@ -118,15 +126,15 @@ const addNewArticle = (e) => {
     visibility: formState.value.visibility,
   };
   if (articleId) {
-    updateArticle(articleId,params).then(res => {
-      message.success('修改文章成功!')
-      router.push("/article/list")
+    updateArticle(articleId, params).then((res) => {
+      message.success("修改文章成功!");
+      router.push("/article/list");
       console.log(res);
-    })
+    });
   } else {
     addArticle(params).then((res) => {
-      message.success('新增文章成功!')
-      router.push("/article/list")
+      message.success("新增文章成功!");
+      router.push("/article/list");
       console.log(res);
     });
   }
@@ -154,8 +162,12 @@ const addNewArticle = (e) => {
         v-model:value="formState.classification"
         placeholder="请选择文章分类"
       >
-        <a-select-option v-for="item in classificationList" :value="item.id" :key="item.id">
-            {{ item.name }}
+        <a-select-option
+          v-for="item in classificationList"
+          :value="item.id"
+          :key="item.id"
+        >
+          {{ item.name }}
         </a-select-option>
       </a-select>
     </a-form-item>
@@ -198,10 +210,13 @@ const addNewArticle = (e) => {
       <MdEditorV3
         v-model="formState.content"
         @onHtmlChanged="saveHtml"
+        @onUploadImg="onUploadImg"
       />
     </a-form-item>
     <a-form-item :wrapper-col="{ offset: labelCol.span }">
-      <a-button html-type="submit" type="primary">{{articleId ? "修改":"发布"}}文章</a-button>
+      <a-button html-type="submit" type="primary"
+        >{{ articleId ? "修改" : "发布" }}文章</a-button
+      >
     </a-form-item>
   </a-form>
 </template>
@@ -211,6 +226,6 @@ const addNewArticle = (e) => {
   margin-bottom: 10px;
 }
 .contentBox {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 </style>
